@@ -6,9 +6,9 @@ export default class Footer extends React.Component {
 
 		return (
 			<div>
-				<footer className="footer">
-					<div className="container">
-						<span className="text-muted">Place sticky footer content here.</span>
+				<footer className="footer bg-dark">
+					<div className="container-fluid">
+						<p className="text-muted text-right">Created by: {'Designscaster'.toUpperCase()} - {(new Date().getFullYear())}</p>
 					</div>
 				</footer>
 			</div>

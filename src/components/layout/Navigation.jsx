@@ -29,7 +29,7 @@ export default class Navigation extends React.Component {
 
 		return (
 			<div>
-				<Navbar color="dark" dark expand="md">
+				<Navbar color="dark" dark fixed="top" expand="md">
 					<NavbarBrand href="/">{'Expense tracker'.toUpperCase()}</NavbarBrand>
 					<NavbarToggler onClick={this.toggle} />
 					<Collapse isOpen={this.state.isOpen} navbar>
