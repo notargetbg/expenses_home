@@ -8,6 +8,7 @@ import {
 	NavItem,
 	NavLink
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 export default class Navigation extends React.Component {
 
@@ -30,12 +31,12 @@ export default class Navigation extends React.Component {
 		return (
 			<div>
 				<Navbar color="dark" dark fixed="top" expand="md">
-					<NavbarBrand href="/">{'Expense tracker'.toUpperCase()}</NavbarBrand>
+					<NavbarBrand tag={Link} to='/'>{'Expense tracker'.toUpperCase()}</NavbarBrand>
 					<NavbarToggler onClick={this.toggle} />
 					<Collapse isOpen={this.state.isOpen} navbar>
 						<Nav className="ml-auto" navbar>
 							<NavItem>
-								<NavLink href="#">About</NavLink>
+								<NavLink tag={Link} to='/about'>About</NavLink>
 							</NavItem>
 							<NavItem>
 								<NavLink href="#">Statistics</NavLink>
