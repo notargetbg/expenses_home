@@ -4,7 +4,7 @@ This is an app to track your income and expenses
 ## Getting started
 * Clone the project
 * Run `npm install` to install dependencies
-* Run `npm start` which will start the project on `localhost:8080`
+* Run `npm start` which will start the project on `localhost:3000`
 
 ### Prerequisites
 Make sure you have `nodejs v8+` installed
