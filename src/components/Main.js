@@ -1,19 +1,17 @@
-import React from 'react';
+import React from 'React';
+import Navigation from './layout/Navigation';
+import Footer from './layout/Footer';
 import '../assets/styles/main.scss';
-import Navigation from './layout/navbar.jsx';
-import Footer from './layout/footer.jsx';
-
-
 
 export default class App extends React.Component {    
 
-    render() {
+	render() {
 
-        return (
-            <div>
-                <Navigation></Navigation>
-                <Footer></Footer>
-            </div>
-        );
-    }
+		return (
+			<div>
+				<Navigation></Navigation>
+				<Footer></Footer>
+			</div>
+		);
+	}
 }
