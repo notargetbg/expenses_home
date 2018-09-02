@@ -8,7 +8,7 @@ export default class View extends React.Component {
 	render() {
 
 		return (
-			<div id='ui-view'>				
+			<div id='ui-view'>
 				<Route exact path='/' component={Home}/>
 				<Route path='/about' component={About}/>
 				<Route path='/statement/:type' component={StatementType}/>

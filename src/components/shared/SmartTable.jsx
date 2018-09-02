@@ -24,7 +24,7 @@ export default class SmartTable extends React.Component {
 							<tr>
 								{tableHeadings.map(heading => <td>{x[heading]}</td>)}
 							</tr>
-						))}												
+						))}
 					</tbody>
 				</Table>
 			</div>

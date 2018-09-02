@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-export default class Home extends React.Component {    
+export default class Home extends React.Component {
 
 	render() {
 

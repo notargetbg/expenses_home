@@ -8,8 +8,8 @@ export default class StatementType extends React.Component {
 	state = {
 		expenses: [],
 		income: []
-	}	
-	
+	}
+
 	componentDidMount() {
 		const statementType = this.props.match.params.type;
 		this.createEntries(DummyData, statementType);

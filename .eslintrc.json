@@ -34,6 +34,12 @@
         "jsx-quotes": [
             "error",
             "prefer-single"
+        ],
+        "no-trailing-spaces": [
+            "error",
+            {
+                "skipBlankLines": false
+            }
         ]
     }
 }
