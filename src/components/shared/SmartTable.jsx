@@ -3,25 +3,35 @@ import { Table } from 'reactstrap';
 
 export default class SmartTable extends React.Component {
 	render() {
-		const { data, type } = this.props;
+		const { data } = this.props;
 
-		if (data.length === 0) {
+		const entries = data.map(item => {
+			return {
+				name: item.name,
+				amount: item.amount,
+				category: item.category,
+				description: item.description,
+				date: item.date
+			};
+		});
+
+		if (entries.length === 0) {
 			return 'loading...';
 		}
-		const tableHeadings = Object.keys(data[0]);
+		const tableHeadings = Object.keys(entries[0]);
 
 		return (
 			<div className='smart-table'>
 				<Table hover responsive>
 					<thead>
 						<tr>
-							{tableHeadings.map(x => <th>{x}</th>)}
+							{tableHeadings.map(x => <th key={x}>{x}</th>)}
 						</tr>
 					</thead>
 					<tbody>
-						{data.map(x => (
-							<tr>
-								{tableHeadings.map(heading => <td>{x[heading]}</td>)}
+						{entries.map((item, i) => (
+							<tr key={`item-${i}`}>
+								{tableHeadings.map(heading => <td key={heading}>{item[heading]}</td>)}
 							</tr>
 						))}
 					</tbody>
