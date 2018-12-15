@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table } from 'reactstrap';
-import EntryModel from '../../core/EntryModel.js';
 
 export default class SmartTable extends React.Component {
 	render() {

@@ -5,6 +5,6 @@ import 'bootstrap/scss/bootstrap.scss';
 import './assets/styles/main.scss';
 
 ReactDOM.render(
-	<App />, 
+	<App />,
 	document.getElementById('app')
 );
