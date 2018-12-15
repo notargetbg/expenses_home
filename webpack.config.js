@@ -35,12 +35,12 @@ module.exports = {
 				use: [
 					{
 						loader: 'file-loader',
-						options: {}  
+						options: {}
 					}
 				]
 			}
 		]
-	},   
+	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebpackPlugin({
