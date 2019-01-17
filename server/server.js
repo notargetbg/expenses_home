@@ -49,7 +49,28 @@ app.post('/api/auth/create', (req, res, next) => {
 	});
 });
 
-// app.post('/api/auth/login', handleLogin);
+app.post('/api/auth/login', (req, res, next) => {
+	if (!req.body.email || !req.body.password) {
+		res.status(400).send({ 'message': 'Credentials missing.' });
+	}
+
+	db.query('SELECT * FROM users WHERE email = $1', [req.body.email], (err, result) => {
+		if(err) {
+			return next(err);
+		}
+
+		const hashedPassword = result.rows[0].password;
+		const userID = result.rows[0].id;
+
+		if (!helper.comparePassword(req.body.password, hashedPassword)) {
+			res.status(400).send({ 'message': 'Credentials wrong' });
+		} else {
+			const token = helper.generateToken(userID);
+			res.status(200).send({ token: token });
+		}
+
+	});
+});
 
 // app.post('/api/category')
 // app.post()

@@ -5,14 +5,14 @@ module.exports = {
 	hashPassword: (password) => {
 		return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 	},
-	comparePassword: (hashPassword, password) => {
+	comparePassword: (password, hashPassword) => {
 		return bcrypt.compareSync(password, hashPassword);
 	},
 	isEmailValid: (email) => {
 		return /\S+@\S+\.\S+/.test(email);
 	},
 	generateToken: (id) => {
-		const token = jwt.sign({
+		return jwt.sign({
 			userId: id
 		},
 		'testBaz',
