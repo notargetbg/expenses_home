@@ -1,10 +1,19 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const helper = require('./core/helper.js');
+
 const app = express();
 const port = process.env.PORT || 5000;
 const db = require('./db');
 
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: false}));
+
+// parse application/json
+app.use(bodyParser.json());
 
 // Add headers
 app.use(function (req, res, next) {
@@ -16,7 +25,7 @@ app.use(function (req, res, next) {
 });
 
 // create a GET route
-app.get('/express_backend', (req, res, next) => {
+app.get('/api/users', (req, res, next) => {
 	db.query('SELECT * FROM users', (err, result) => {
 		if(err) {
 			return next(err);
@@ -27,3 +36,20 @@ app.get('/express_backend', (req, res, next) => {
 		});
 	});
 });
+
+app.post('/api/auth/create', (req, res, next) => {
+	db.query('INSERT INTO users(email, password) VALUES($1, $2)', [
+		req.body.email,
+		helper.hashPassword(req.body.password)
+	], (err) => {
+		if(err) {
+			return next(err);
+		}
+		res.sendStatus(200);
+	});
+});
+
+// app.post('/api/auth/login', handleLogin);
+
+// app.post('/api/category')
+// app.post()
