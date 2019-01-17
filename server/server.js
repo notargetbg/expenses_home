@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const helper = require('./core/helper.js');
+const authMiddleware = require('./core/authMiddleware.js');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -24,7 +25,7 @@ app.use(function (req, res, next) {
 	next();
 });
 
-// create a GET route
+// Auth routes
 app.get('/api/users', (req, res, next) => {
 	db.query('SELECT * FROM users', (err, result) => {
 		if(err) {
@@ -70,6 +71,10 @@ app.post('/api/auth/login', (req, res, next) => {
 		}
 
 	});
+});
+
+app.post('/api/expenses', authMiddleware.verifyToken, (req, res, next) => {	
+	res.status(200).send({ 'message': 'Token valid.' });
 });
 
 // app.post('/api/category')
