@@ -39,15 +39,23 @@ app.get('/api/users', (req, res, next) => {
 });
 
 app.post('/api/auth/create', (req, res, next) => {
+	if (!req.body.email || !req.body.password) {
+		return res.status(400).send({ 'message': 'Input data missing.' });
+	}
+
 	db.query('INSERT INTO users(email, password) VALUES($1, $2)', [
 		req.body.email,
 		helper.hashPassword(req.body.password)
-	], (err) => {
-		if(err) {
+	])
+		.then(result => {
+			res.status(200).send({ 'message': 'OK.' });
+		})
+		.catch(err => {
+			if (err.code === '23505') {
+				res.status(400).send({ 'message': 'Email is in use.' });
+			}
 			return next(err);
-		}
-		res.sendStatus(200);
-	});
+		});
 });
 
 app.post('/api/auth/login', (req, res, next) => {
@@ -56,8 +64,12 @@ app.post('/api/auth/login', (req, res, next) => {
 	}
 
 	db.query('SELECT * FROM users WHERE email = $1', [req.body.email], (err, result) => {
-		if(err) {
+		if (err) {
 			return next(err);
+		}
+
+		if (result.rows.length === 0) {
+			res.status(400).send({ 'message': 'No such user.' });
 		}
 
 		const hashedPassword = result.rows[0].password;
@@ -73,8 +85,28 @@ app.post('/api/auth/login', (req, res, next) => {
 	});
 });
 
-app.post('/api/expenses', authMiddleware.verifyToken, (req, res, next) => {	
-	res.status(200).send({ 'message': 'Token valid.' });
+// API expenses routes
+app.post('/api/expenses', authMiddleware.verifyToken, (req, res, next) => {
+	// res.status(200).send({ 'message': 'Token valid.' });
+	if (!req.body.date || !req.body.name || !req.body.amount) {
+		res.status(400).send({ 'message': 'Input data missing.' });
+	}
+
+	db.query('INSERT INTO expenses( "userID", "categoryID", name, amount, date, description) VALUES($1, $2, $3, $4, $5, $6)', [
+		req.tokenData.userID,
+		44, // get dropdown options for all cats here
+		req.body.name,
+		req.body.amount,
+		req.body.date,
+		req.body.description
+	])
+		.then(result => {
+			console.log(result);
+		})
+		.catch(err => {
+			e => console.error(e.stack);
+		});
+
 });
 
 // app.post('/api/category')

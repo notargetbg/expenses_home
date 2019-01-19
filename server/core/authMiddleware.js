@@ -10,10 +10,13 @@ exports.verifyToken = function(req, res, next) {
 	if(typeof bearerHeader !== 'undefined') {
 		const bearerToken = bearerHeader.split(' ')[1];
 
+		req.token = bearerToken;
+
 		jwt.verify(bearerToken, 'testBaz', (err, authData) => {
 			if(err) {
 				res.sendStatus(403);
 			} else {
+				req.tokenData = authData;
 				next();
 			}
 		});
