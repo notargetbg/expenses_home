@@ -60,7 +60,7 @@ app.post('/api/auth/create', (req, res, next) => {
 
 app.post('/api/auth/login', (req, res, next) => {
 	if (!req.body.email || !req.body.password) {
-		res.status(400).send({ 'message': 'Credentials missing.' });
+		return res.status(400).send({ 'message': 'Credentials missing.' });
 	}
 
 	db.query('SELECT * FROM users WHERE email = $1', [req.body.email], (err, result) => {
@@ -69,7 +69,7 @@ app.post('/api/auth/login', (req, res, next) => {
 		}
 
 		if (result.rows.length === 0) {
-			res.status(400).send({ 'message': 'No such user.' });
+			return res.status(400).send({ 'message': 'No such user.' });
 		}
 
 		const hashedPassword = result.rows[0].password;
