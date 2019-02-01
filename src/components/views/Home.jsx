@@ -2,7 +2,10 @@ import React from 'react';
 import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-export default class Home extends React.Component {
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions';
+
+class Home extends React.Component {
 
 	state = {
 		email: '',
@@ -71,7 +74,7 @@ export default class Home extends React.Component {
 								<Label for='password'>Password</Label>
 								<Input type='password' id='password' onChange={this.handlePasswordChange} />
 							</FormGroup>
-							<Button>Login</Button>
+							<Button onClick={() => this.props.dispatch(actions.test2())}>Login</Button>
 						</Form>
 					</Row>
 				}
@@ -79,3 +82,5 @@ export default class Home extends React.Component {
 		);
 	}
 }
+
+export default connect()(Home);

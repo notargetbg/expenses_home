@@ -4,13 +4,18 @@ import App from './components/Main';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from './store/reducers';
-// import { composeWithDevTools } from 'redux-devtools-extension';
+import ReduxThunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import 'bootstrap/scss/bootstrap.scss';
 import './assets/styles/main.scss';
 
-const appStore = createStore(rootReducer, undefined,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const middlewares = [ReduxThunk];
+const middlewareEnhancer = applyMiddleware(...middlewares);
 
+const enhancers = [middlewareEnhancer];
+const composedEnhancers = composeWithDevTools(...enhancers);
 
+const appStore = createStore(rootReducer, undefined,  composedEnhancers);
 
 ReactDOM.render(
 	<Provider store={appStore}>
