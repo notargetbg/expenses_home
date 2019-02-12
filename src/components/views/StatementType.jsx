@@ -14,9 +14,9 @@ export default class StatementType extends React.Component {
 		const statementType = this.props.match.params.type;
 		this.createEntries(DummyData, statementType);
 
-		fetch('http://localhost:5000/express_backend')
-			.then(response => response.json())
-			.then(response => console.log(response));
+		// fetch('http://localhost:5000/express_backend')
+		// 	.then(response => response.json())
+		// 	.then(response => console.log(response));
 	}
 
 	createEntries = (data, type) => {

@@ -10,8 +10,6 @@ class Home extends React.Component {
 	state = {
 		email: '',
 		password: '',
-		isAuthenticated: false,
-		token: null
 	};
 
 	handleEmailChange = (e) => {
@@ -25,35 +23,19 @@ class Home extends React.Component {
 	handleLogin = (e) => {
 		e.preventDefault();
 
-		fetch('http://localhost:5000/api/auth/login', {
-			method: 'POST',
-			headers: {
-				// "Content-Type": "application/json",
-				"Content-Type": "application/x-www-form-urlencoded",
-			},
-			body: `email=${this.state.email}&password=${this.state.password}`
-		})
-			.then(response => response.json())
-			.then(response => {
-				if (response.token) {
-					this.setState({
-						token: response.token,
-						isAuthenticated: true
-					});
-				}
-			})
-			.catch(err => {
-				console.log(err);
-			});
-
+		if (!this.props.isUserLoggedIn) {
+			this.props.dispatch(
+				actions.userLogin(this.state.email, this.state.password)
+			);
+		}
 	}
 
 	render() {
-		const { isAuthenticated } = this.state;
+		const { isUserLoggedIn } = this.props.user;
 
 		return (
 			<Container fluid className='home-container'>
-				{isAuthenticated &&
+				{isUserLoggedIn &&
 					<Row>
 						<Col>
 							<Link to='/statement/income' className='main-category main-category--income'>Income</Link>
@@ -63,7 +45,7 @@ class Home extends React.Component {
 						</Col>
 					</Row>
 				}
-				{!isAuthenticated &&
+				{!isUserLoggedIn &&
 					<Row className='text-center'>
 						<Form onSubmit={this.handleLogin}>
 							<FormGroup>
@@ -74,7 +56,7 @@ class Home extends React.Component {
 								<Label for='password'>Password</Label>
 								<Input type='password' id='password' onChange={this.handlePasswordChange} />
 							</FormGroup>
-							<Button onClick={() => this.props.dispatch(actions.test2())}>Login</Button>
+							<Button onClick={this.handleLogin}>Login</Button>
 						</Form>
 					</Row>
 				}
@@ -83,4 +65,8 @@ class Home extends React.Component {
 	}
 }
 
-export default connect()(Home);
+function mapStateToProps(state) {
+	return {user: state.user};
+};
+
+export default connect(mapStateToProps)(Home);

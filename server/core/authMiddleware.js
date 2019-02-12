@@ -12,7 +12,7 @@ exports.verifyToken = function(req, res, next) {
 
 		req.token = bearerToken;
 
-		jwt.verify(bearerToken, 'testBaz', (err, authData) => {
+		jwt.verify(bearerToken, 'jazzFizz', (err, authData) => {
 			if(err) {
 				res.sendStatus(403);
 			} else {

@@ -6,46 +6,61 @@ import {
 	NavbarBrand,
 	Nav,
 	NavItem,
-	NavLink
+	NavLink,
+	Button
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions';
 
-export default class Navigation extends React.Component {
+class Navigation extends React.Component {
+	state = {
+		isOpen: false
+	};
 
-	constructor(props) {
-		super(props);
-
-		this.toggle = this.toggle.bind(this);
-		this.state = {
-			isOpen: false
-		};
-	}
-	toggle() {
+	toggle = () => {
 		this.setState({
 			isOpen: !this.state.isOpen
 		});
 	}
 
+	logout = () => {
+		this.props.dispatch(actions.userLogout());
+	}
+
 	render() {
 
 		return (
-			<Navbar color="dark" dark fixed="top" expand="md">
+			<Navbar color='dark' dark fixed='top' expand='md'>
 				<NavbarBrand tag={Link} to='/'>{'Expense tracker'.toUpperCase()}</NavbarBrand>
 				<NavbarToggler onClick={this.toggle} />
 				<Collapse isOpen={this.state.isOpen} navbar>
-					<Nav className="ml-auto" navbar>
+					<Nav className='ml-auto' navbar>
 						<NavItem>
 							<NavLink tag={Link} to='/about'>About</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink href="#">Statistics</NavLink>
+							<NavLink href='#'>Statistics</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink href="#">Reports</NavLink>
+							<NavLink href='#'>Reports</NavLink>
 						</NavItem>
+						{this.props.user.isUserLoggedIn &&
+						<NavItem>
+							<NavLink href='#' onClick={this.logout}>
+								<Button size='sm'>Logout</Button>
+							</NavLink>
+						</NavItem>
+						}
 					</Nav>
 				</Collapse>
 			</Navbar>
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return {user: state.user};
+};
+
+export default connect(mapStateToProps)(Navigation);

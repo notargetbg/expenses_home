@@ -15,7 +15,7 @@ module.exports = {
 		return jwt.sign({
 			userId: id
 		},
-		'testBaz',
+		'jazzFizz',
 		{expiresIn: '7d'});
 	}
 };
