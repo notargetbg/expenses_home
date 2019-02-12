@@ -36,6 +36,13 @@ export default function(state = DEFAULT_STATE, action) {
 		};
 	};
 
+	if (action.type === 'CLEAR_ERROR') {
+		return {
+			...state,
+			error: null
+		};
+	}
+
 	if (action.type === 'USER_LOGOUT') {
 		return {
 			...state,

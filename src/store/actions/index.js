@@ -10,6 +10,12 @@ function handleError(dispatch) {
 	};
 }
 
+export const clearError = () => {
+	return {
+		type: 'CLEAR_ERROR'
+	};
+};
+
 export const testAction = data => {
 	return {
 		type: 'TEST_ACTION',

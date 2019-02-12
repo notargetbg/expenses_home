@@ -26,7 +26,7 @@ export default class LoginForm extends React.Component {
 	}
 
 	render() {
-		const { isLoginPending } = this.props;
+		const { isLoginPending, error } = this.props;
 		const spinnerStyle = { width: '2rem', height: '2rem' };
 
 		return (
@@ -39,6 +39,13 @@ export default class LoginForm extends React.Component {
 					<Label for='password'>Password</Label>
 					<Input type='password' id='password' onChange={this.handlePasswordChange} />
 				</FormGroup>
+
+				{error &&
+					<div className='invalid-feedback form-error'>
+						{error.payload.message}
+					</div>
+				}
+
 				{!isLoginPending &&
 					<Button onClick={this.handleLogin}>Login</Button>
 				}
