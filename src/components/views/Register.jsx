@@ -14,12 +14,22 @@ class Register extends React.Component {
 		if (this.props.user.isUserLoggedIn) {
 			this.props.history.push('/');
 		}
+
+		this.unlistenHistory = this.props.history.listen((location, action) => {
+			if (this.props.user.error) {
+				this.props.dispatch(actions.clearError());
+			}
+		});
 	}
 
 	componentDidUpdate() {
 		if (this.props.user.isUserLoggedIn) {
 			this.props.history.push('/');
 		}
+	}
+
+	componentWillUnmount() {
+		this.unlistenHistory();
 	}
 
 	render() {

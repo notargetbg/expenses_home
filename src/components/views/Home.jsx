@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Jumbotron } from 'reactstrap';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
@@ -59,7 +59,9 @@ class Home extends React.Component {
 }
 
 function mapStateToProps(state) {
-	return {user: state.user};
+	return {
+		user: state.user
+	};
 };
 
-export default withRouter(connect(mapStateToProps)(Home));
+export default connect(mapStateToProps)(Home);
