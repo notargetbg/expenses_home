@@ -51,5 +51,12 @@ export default function(state = DEFAULT_STATE, action) {
 		};
 	};
 
+	if (action.type === 'USER_REGISTER_SUCCESS') {
+		return {
+			...state,
+			registerPending: false
+		};
+	};
+
 	return state;
 }

@@ -61,6 +61,9 @@ export const userRegister = (email, password) => {
 
 		return AuthService.register(email, password)
 			.then((res) => {
+				dispatch({
+					type: 'USER_REGISTER_SUCCESS'
+				});
 				dispatch(userLogin(email, password));
 			})
 			.catch(handleError(dispatch));
