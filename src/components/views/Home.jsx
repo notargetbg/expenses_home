@@ -1,40 +1,24 @@
 import React from 'react';
-import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Container, Row, Col, Jumbotron } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
+import LoginForm from '../common/LoginForm.jsx';
 
 class Home extends React.Component {
 
-	state = {
-		email: '',
-		password: '',
-	};
-
-	handleEmailChange = (e) => {
-		this.setState({email: e.target.value});
-	}
-
-	handlePasswordChange = (e) => {
-		this.setState({password: e.target.value});
-	}
-
-	handleLogin = (e) => {
-		e.preventDefault();
-
-		if (!this.props.isUserLoggedIn) {
-			this.props.dispatch(
-				actions.userLogin(this.state.email, this.state.password)
-			);
-		}
+	handleLogin = (name, password) => {
+		this.props.dispatch(
+			actions.userLogin(name, password)
+		);
 	}
 
 	render() {
-		const { isUserLoggedIn } = this.props.user;
+		const { isUserLoggedIn, loginPending } = this.props.user;
 
 		return (
-			<Container fluid className='home-container'>
+			<Container fluid className='home-container h-100'>
 				{isUserLoggedIn &&
 					<Row>
 						<Col>
@@ -46,18 +30,15 @@ class Home extends React.Component {
 					</Row>
 				}
 				{!isUserLoggedIn &&
-					<Row className='text-center'>
-						<Form onSubmit={this.handleLogin}>
-							<FormGroup>
-								<Label for='email'>Email</Label>
-								<Input type='email' id='email' onChange={this.handleEmailChange} />
-							</FormGroup>
-							<FormGroup>
-								<Label for='password'>Password</Label>
-								<Input type='password' id='password' onChange={this.handlePasswordChange} />
-							</FormGroup>
-							<Button onClick={this.handleLogin}>Login</Button>
-						</Form>
+					<Row className='h-100 d-flex justify-content-center'>
+						<Jumbotron className='my-auto'>
+							<h1 className=''>Hey there!</h1>
+							<p className='lead'>This is our simple <span className='badge badge-secondary'>expense tracker app</span>, 
+							please login or <Link to='/register'>register</Link> in order to continue.</p>
+							<hr className='' />
+
+							<LoginForm isLoginPending={loginPending} handleLogin={this.handleLogin} />
+						</Jumbotron>
 					</Row>
 				}
 			</Container>

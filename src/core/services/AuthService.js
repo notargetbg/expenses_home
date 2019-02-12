@@ -1,23 +1,30 @@
 import * as jwt from 'jsonwebtoken';
 import API from '../client';
 
+function handleResponce(response) {
+	if(!response.ok) {
+		return response.json().then(err => {
+			const errorData = {
+				status: response.status,
+				statusText: response.statusText,
+				payload: err
+			};
+
+			throw errorData;
+		});
+	}
+	return response.json();
+}
+
 export default class AuthService {
 	static login(email, password) {
 		return API.login(email, password)
-			.then(response => {
-				if(!response.ok) {
-					return response.json().then(err => {
-						throw err;
-					});
-				}
-				return response.json();
-			})
-			.then(res => {
-				AuthService.saveToken(res.token);
-			})
-			.catch(err => {
-				console.log('error:', err);
-			});
+			.then(handleResponce);
+	}
+
+	static register(email, password) {
+		return API.register(email, password)
+			.then(handleResponce);
 	}
 
 	static saveToken(token) {

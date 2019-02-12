@@ -2,11 +2,14 @@ import AuthService from '../../core/services/AuthService';
 
 const DEFAULT_STATE = {
 	isUserLoggedIn: AuthService.isUserLoggedIn(),
-	loginPending: false
+	loginPending: false,
+	registerPending: false,
+	error: null
 };
 
 export default function(state = DEFAULT_STATE, action) {
 
+	// USER LOGIN
 	if (action.type === 'USER_LOGIN_PENDING') {
 		return {
 			...state,
@@ -18,14 +21,18 @@ export default function(state = DEFAULT_STATE, action) {
 		return {
 			...state,
 			isUserLoggedIn: action.payload,
-			loginPending: false
+			loginPending: false,
+			error: null
 		};
 	};
 
-	if (action.type === 'USER_LOGIN_ERROR') {
+	if (action.type === 'USER_ERROR') {
 		return {
 			...state,
-			loginPending: false
+			loginPending: false,
+			registerPending: false,
+			error: action.payload
+
 		};
 	};
 
@@ -33,6 +40,14 @@ export default function(state = DEFAULT_STATE, action) {
 		return {
 			...state,
 			isUserLoggedIn: false
+		};
+	};
+
+	// USER REGISTER
+	if (action.type === 'USER_REGISTER_PENDING') {
+		return {
+			...state,
+			registerPending: true
 		};
 	};
 

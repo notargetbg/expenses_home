@@ -8,7 +8,7 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<Router>
-				<div className='main-container'>
+				<div className='main-container h-100'>
 					<Navigation></Navigation>
 					<View />
 					<Footer></Footer>

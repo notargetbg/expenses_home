@@ -9,7 +9,7 @@ import {
 	NavLink,
 	Button
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 
@@ -26,6 +26,7 @@ class Navigation extends React.Component {
 
 	logout = () => {
 		this.props.dispatch(actions.userLogout());
+		this.props.history.push('/');
 	}
 
 	render() {
@@ -63,4 +64,4 @@ function mapStateToProps(state) {
 	return {user: state.user};
 };
 
-export default connect(mapStateToProps)(Navigation);
+export default withRouter(connect(mapStateToProps)(Navigation));

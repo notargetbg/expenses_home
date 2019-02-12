@@ -1,5 +1,14 @@
 import AuthService from '../../core/services/AuthService';
 
+function handleError(dispatch) {
+	return err => {
+		console.log('Error:', err);
+		dispatch({
+			type: 'USER_ERROR',
+			payload: err
+		});
+	};
+}
 
 export const testAction = data => {
 	return {
@@ -22,18 +31,17 @@ export const userLogin = (email, password) => {
 		});
 
 		return AuthService.login(email, password)
-			.then(() => {
+			.then(res => {
+				AuthService.saveToken(res.token);
+
 				if (AuthService.isUserLoggedIn()) {
 					dispatch({
 						type: 'USER_LOGIN_SUCCESS',
 						payload: true
 					});
-				} else {
-					dispatch({
-						type: 'USER_LOGIN_ERROR'
-					});
 				}
-			});
+			})
+			.catch(handleError(dispatch));
 	};
 };
 
@@ -42,5 +50,19 @@ export const userLogout = () => {
 
 	return {
 		type: 'USER_LOGOUT'
+	};
+};
+
+export const userRegister = (email, password) => {
+	return dispatch => {
+		dispatch({
+			type: 'USER_REGISTER_PENDING'
+		});
+
+		return AuthService.register(email, password)
+			.then((res) => {
+				dispatch(userLogin(email, password));
+			})
+			.catch(handleError(dispatch));
 	};
 };
