@@ -1,7 +1,8 @@
 import * as jwt from 'jsonwebtoken';
 import API from '../client';
 
-function handleResponce(response) {
+function handleResponse(response) {
+
 	if(!response.ok) {
 		return response.json().then(err => {
 			const errorData = {
@@ -19,12 +20,12 @@ function handleResponce(response) {
 export default class AuthService {
 	static login(email, password) {
 		return API.login(email, password)
-			.then(handleResponce);
+			.then(handleResponse);
 	}
 
 	static register(email, password) {
 		return API.register(email, password)
-			.then(handleResponce);
+			.then(handleResponse);
 	}
 
 	static saveToken(token) {
