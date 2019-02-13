@@ -1,5 +1,6 @@
 import AuthService from '../../core/services/AuthService';
 
+// Todo: consider moving back to actionCreator which'll get dispatched inside catch...
 function handleError(dispatch) {
 	return err => {
 		console.log('Error:', err);
@@ -13,20 +14,6 @@ function handleError(dispatch) {
 export const clearError = () => {
 	return {
 		type: 'CLEAR_ERROR'
-	};
-};
-
-export const testAction = data => {
-	return {
-		type: 'TEST_ACTION',
-		payload: data
-	};
-};
-
-export const test2 = () => {
-	return (dispatch, getState) => {
-		console.log(getState());
-		dispatch(testAction(2));
 	};
 };
 

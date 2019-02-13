@@ -45,7 +45,7 @@ class Home extends React.Component {
 					<Row className='h-100 d-flex justify-content-center'>
 						<Jumbotron className='my-auto'>
 							<h1 className=''>Hey there!</h1>
-							<p className='lead'>This is our simple <span className='badge badge-secondary'>expense tracker app</span>, 
+							<p className='lead'>This is our simple <span className='badge badge-secondary'>expense tracker app</span>,
 							please login or <Link to='/register'>register</Link> in order to continue.</p>
 							<hr className='' />
 
