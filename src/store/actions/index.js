@@ -4,6 +4,7 @@ import AuthService from '../../core/services/AuthService';
 function handleError(dispatch) {
 	return err => {
 		console.log('Error:', err);
+
 		dispatch({
 			type: 'USER_ERROR',
 			payload: err

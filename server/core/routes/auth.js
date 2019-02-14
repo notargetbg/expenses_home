@@ -2,10 +2,19 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db');
 const helper = require('../helper.js');
+const { check, validationResult } = require('express-validator/check');
 
-router.post('/create', (req, res, next) => {
+router.post('/create', [
+	check('email').isEmail().withMessage('Must be a valid email.'),
+	check('password').isLength({min: 5}).withMessage('Must be at least 5 letters long.'),
+], (req, res, next) => {
 	if (!req.body.email || !req.body.password) {
 		return res.status(400).send({ 'message': 'Input data missing.' });
+	}
+
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).send({ 'errors': errors.mapped() });
 	}
 
 	db.query('INSERT INTO users(email, password) VALUES($1, $2)', [
@@ -19,6 +28,7 @@ router.post('/create', (req, res, next) => {
 			if (err.code === '23505') {
 				res.status(400).send({ 'message': 'Email is in use.' });
 			}
+
 			return next(err);
 		});
 });

@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const authRouter = require('./core/routers/auth.js');
-const usersRouter = require('./core/routers/users.js');
-const expensesRouter = require('./core/routers/expenses.js');
-const categoriesRouter = require('./core/routers/categories.js');
-const incomeRouter = require('./core/routers/income.js');
+const authRouter = require('./core/routes/auth.js');
+const usersRouter = require('./core/routes/users.js');
+const expensesRouter = require('./core/routes/expenses.js');
+const categoriesRouter = require('./core/routes/categories.js');
+const incomeRouter = require('./core/routes/income.js');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -37,5 +37,8 @@ app.use(`${basePath}/income`, incomeRouter);
 
 app.use(function (err, req, res, next) {
 	console.error('error:' ,err.stack);
-	res.status(500).send('Something broke!');
+	res.status(500).send({
+		message: 'Something broke!',
+		error: err
+	});
 });

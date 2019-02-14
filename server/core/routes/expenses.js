@@ -1,19 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../authMiddleware');
-const db = require('../../db');
+const expense = require('../models/expense');
+const { check, validationResult } = require('express-validator/check');
 
 router.get('/', authMiddleware.verifyToken, (req, res, next) => {
-	db.query('SELECT * FROM expenses WHERE "userID" = $1', [
-		req.tokenData.userId
-	], (err, result) => {
-		if(err) {
-			return next(err);
-		}
-		res.send({
-			expenses: result.rows
+	if (!req.tokenData.userId) {
+		return res.status(400).send({ 'message': 'UserId missing.' });
+	}
+
+	expense.getAll(req.tokenData.userId)
+		.then(result => {
+			res.status(200).send({
+				expenses: result.rows
+			});
+		})
+		.catch(err => {
+			next(err);
 		});
-	});
 });
 
 router.post('/', authMiddleware.verifyToken, (req, res, next) => {
@@ -21,14 +25,14 @@ router.post('/', authMiddleware.verifyToken, (req, res, next) => {
 		return res.status(400).send({ 'message': 'Input data missing.' });
 	}
 
-	db.query('INSERT INTO expenses("userID", "categoryID", name, amount, description, date) VALUES($1, $2, $3, $4, $5, $6)', [
+	expense.create(
 		req.tokenData.userId,
 		req.body.categoryId,
 		req.body.name,
 		req.body.amount,
 		req.body.description,
-		req.body.date,
-	])
+		req.body.date
+	)
 		.then(result => {
 			res.status(200).send({ 'message': 'OK.' });
 		})
@@ -42,22 +46,14 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 		return res.status(400).send({ 'message': 'Input data missing.' });
 	}
 
-	db.query(`
-		UPDATE expenses SET 
-			"categoryID" = COALESCE($1, "categoryID")
-			name = COALESCE($2, name), 
-			amount = COALESCE($3, amount), 
-			description = COALESCE($4, description), 
-			date = COALESCE($5, date) 
-		WHERE id = $6
-	`, [
+	expense.update(
 		req.body.categoryId,
 		req.body.name,
 		req.body.amount,
 		req.body.description,
 		req.body.date,
 		req.params.id,
-	])
+	)
 		.then(result => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is updated.' });
@@ -71,9 +67,10 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 });
 
 router.delete('/:id', authMiddleware.verifyToken, (req, res ,next) => {
-	db.query('DELETE FROM expenses WHERE id = $1', [
+
+	expense.deleteOne(
 		req.params.id,
-	])
+	)
 		.then(result => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is deleted.' });

@@ -23,14 +23,6 @@ export default class LoginForm extends React.Component {
 		this.setState({passwordRepeat: e.target.value});
 	}
 
-	validatePasswordFields = (password, passwordRepeat) => {
-		const MIN_LENGTH = 2;
-		if ( password.length >= MIN_LENGTH && passwordRepeat.length >= MIN_LENGTH && password === passwordRepeat) {
-			return this.compareFields(password, passwordRepeat);
-		}
-		return false;
-	}
-
 	compareFields = (a, b) => {
 		if (a === b) {
 			this.setState({arePasswordsEqual: true});
@@ -48,7 +40,7 @@ export default class LoginForm extends React.Component {
 			return;
 		}
 
-		if (this.validatePasswordFields(password, passwordRepeat)) {
+		if (this.compareFields(password, passwordRepeat)) {
 			this.setState({arePasswordsEqual: true});
 			this.props.handleRegister(email, password, passwordRepeat);
 		} else {
@@ -62,6 +54,11 @@ export default class LoginForm extends React.Component {
 		const { registerPending, error } = this.props;
 		const { arePasswordsEqual, hasAttemptedRegister } = this.state;
 		const spinnerStyle = { width: '2rem', height: '2rem' };
+
+		console.log(error);
+
+		
+		
 
 		return (
 			<Form>
@@ -84,7 +81,7 @@ export default class LoginForm extends React.Component {
 
 				{error &&
 					<div className='invalid-feedback form-error'>
-						{error.payload.message}
+						{error.payload.message && error.payload.message}
 					</div>
 				}
 
