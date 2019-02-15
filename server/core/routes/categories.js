@@ -71,7 +71,7 @@ router.delete('/:id', authMiddleware.verifyToken, (req, res ,next) => {
 				res.status(200).send({ 'message': 'OK.' });
 			}
 		})
-		.catch(err =>next(err));
+		.catch(err => next(err));
 });
 
 module.exports = router;
