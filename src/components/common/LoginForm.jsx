@@ -42,7 +42,7 @@ export default class LoginForm extends React.Component {
 
 				{error &&
 					<div className='invalid-feedback form-error'>
-						{error.payload.message}
+						{error.message && error.message}
 					</div>
 				}
 

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../authMiddleware');
 const expense = require('../models/expense');
-const { check, validationResult } = require('express-validator/check');
 
 router.get('/', authMiddleware.verifyToken, (req, res, next) => {
 	if (!req.tokenData.userId) {
@@ -15,31 +14,32 @@ router.get('/', authMiddleware.verifyToken, (req, res, next) => {
 				expenses: result.rows
 			});
 		})
-		.catch(err => {
-			next(err);
-		});
+		.catch(err => next(err));
 });
 
-router.post('/', authMiddleware.verifyToken, (req, res, next) => {
-	if (!req.body.name || !req.body.amount || !req.body.date) {
-		return res.status(400).send({ 'message': 'Input data missing.' });
-	}
+router.post('/', authMiddleware.verifyToken,
+	(req, res, next) => {
+		if (!req.body.name || !req.body.amount || !req.body.date) {
+			return res.status(400).send({ 'message': 'Input data missing.' });
+		}
 
-	expense.create(
-		req.tokenData.userId,
-		req.body.categoryId,
-		req.body.name,
-		req.body.amount,
-		req.body.description,
-		req.body.date
-	)
-		.then(result => {
-			res.status(200).send({ 'message': 'OK.' });
-		})
-		.catch(err => {
-			next(err);
-		});
-});
+		// Todo: validate cats..
+
+		expense.create(
+			req.tokenData.userId,
+			req.body.categoryId,
+			req.body.name,
+			req.body.amount,
+			req.body.description,
+			req.body.date
+		)
+			.then(result => {
+				res.status(200).send({ 'message': 'OK.' });
+			})
+			.catch(err => {
+				next(err);
+			});
+	});
 
 router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 	if (!req.body.name && !req.body.amount && !req.body.date) {

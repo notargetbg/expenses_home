@@ -36,17 +36,12 @@ export default class LoginForm extends React.Component {
 		if (!error || !error.fields) {
 			return false;
 		}
-		console.log(error.fields[field] ? true : false)
 		return error.fields[field] ? true : false;
 	}
 
 	render() {
 		const { registerPending, error } = this.props;
 		const spinnerStyle = { width: '2rem', height: '2rem' };
-
-		console.log(error);
-
-
 
 		return (
 			<Form>
