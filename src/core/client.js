@@ -16,11 +16,11 @@ export default class API {
 
 	}
 
-	static register(email, password) {
+	static register(email, password, passwordConfirmation) {
 		return fetch(`${BASE_API}/auth/create`, {
 			method: 'POST',
 			headers,
-			body: `email=${email}&password=${password}`
+			body: `email=${email}&password=${password}&passwordConfirmation=${passwordConfirmation}`
 		});
 	}
 };

@@ -8,7 +8,7 @@ function handleResponse(response) {
 			const errorData = {
 				status: response.status,
 				statusText: response.statusText,
-				payload: err
+				...err
 			};
 
 			throw errorData;
@@ -23,8 +23,8 @@ export default class AuthService {
 			.then(handleResponse);
 	}
 
-	static register(email, password) {
-		return API.register(email, password)
+	static register(email, password, passwordConfirmation) {
+		return API.register(email, password, passwordConfirmation)
 			.then(handleResponse);
 	}
 

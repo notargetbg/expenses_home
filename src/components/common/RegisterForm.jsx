@@ -6,9 +6,7 @@ export default class LoginForm extends React.Component {
 	state = {
 		email: '',
 		password: '',
-		passwordRepeat: '',
-		hasAttemptedRegister: false,
-		arePasswordsEqual: null
+		passwordRepeat: ''
 	};
 
 	handleEmailChange = (e) => {
@@ -23,15 +21,6 @@ export default class LoginForm extends React.Component {
 		this.setState({passwordRepeat: e.target.value});
 	}
 
-	compareFields = (a, b) => {
-		if (a === b) {
-			this.setState({arePasswordsEqual: true});
-			return true;
-		}
-		this.setState({arePasswordsEqual: false});
-		return false;
-	};
-
 	handleRegister = (e) => {
 		const { email, password, passwordRepeat } = this.state;
 		e.preventDefault();
@@ -40,48 +29,53 @@ export default class LoginForm extends React.Component {
 			return;
 		}
 
-		if (this.compareFields(password, passwordRepeat)) {
-			this.setState({arePasswordsEqual: true});
-			this.props.handleRegister(email, password, passwordRepeat);
-		} else {
-			this.setState({arePasswordsEqual: false});
-		}
+		this.props.handleRegister(email, password, passwordRepeat);
+	}
 
-		this.setState({hasAttemptedRegister: true});
+	hasError = (error, field) => {
+		if (!error || !error.fields) {
+			return false;
+		}
+		console.log(error.fields[field] ? true : false)
+		return error.fields[field] ? true : false;
 	}
 
 	render() {
 		const { registerPending, error } = this.props;
-		const { arePasswordsEqual, hasAttemptedRegister } = this.state;
 		const spinnerStyle = { width: '2rem', height: '2rem' };
 
 		console.log(error);
 
-		
-		
+
 
 		return (
 			<Form>
 				<FormGroup>
 					<Label for='email'>Email</Label>
-					<Input type='email' id='email' onChange={this.handleEmailChange} />
+					<Input invalid={this.hasError(error, 'email')} type='email' id='email' onChange={this.handleEmailChange} />
+					{this.hasError(error, 'email') &&
+						<FormFeedback>{error.fields.email.msg}</FormFeedback>
+					}
 				</FormGroup>
 				<FormGroup>
 					<Label for='password'>Password</Label>
-					<Input invalid={hasAttemptedRegister && !arePasswordsEqual} valid={hasAttemptedRegister && arePasswordsEqual} type='password' id='password' onChange={this.handlePasswordChange} />
+					<Input invalid={this.hasError(error, 'password')} type='password' id='password' onChange={this.handlePasswordChange} />
+					{this.hasError(error, 'password') &&
+						<FormFeedback>{error.fields.password.msg}</FormFeedback>
+					}
 				</FormGroup>
 
 				<FormGroup>
-					<Label for='passwordRepeat'>Password Repeat</Label>
-					<Input invalid={hasAttemptedRegister && !arePasswordsEqual} valid={hasAttemptedRegister && arePasswordsEqual} type='password' id='passwordRepeat' onChange={this.handlePasswordRepeatChange} />
-					{hasAttemptedRegister &&
-						<FormFeedback>Passwords must match</FormFeedback>
+					<Label for='passwordConfirmation'>Confirm password</Label>
+					<Input invalid={this.hasError(error, 'passwordConfirmation')} type='password' id='passwordConfirmation' onChange={this.handlePasswordRepeatChange} />
+					{this.hasError(error, 'passwordConfirmation') &&
+						<FormFeedback>{error.fields.passwordConfirmation.msg}</FormFeedback>
 					}
 				</FormGroup>
 
 				{error &&
 					<div className='invalid-feedback form-error'>
-						{error.payload.message && error.payload.message}
+						{error.message && error.message}
 					</div>
 				}
 

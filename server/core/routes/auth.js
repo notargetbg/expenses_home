@@ -7,6 +7,9 @@ const { check, validationResult } = require('express-validator/check');
 router.post('/create', [
 	check('email').isEmail().withMessage('Must be a valid email.'),
 	check('password').isLength({min: 5}).withMessage('Must be at least 5 letters long.'),
+	check('passwordConfirmation')
+		.custom((value, {req}) => value === req.body.password)
+		.withMessage('Password repeat must be equal to your password.')
 ], (req, res, next) => {
 	if (!req.body.email || !req.body.password) {
 		return res.status(400).send({ 'message': 'Input data missing.' });
@@ -14,7 +17,7 @@ router.post('/create', [
 
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return res.status(400).send({ 'errors': errors.mapped() });
+		return res.status(400).send({ 'fields': errors.mapped() });
 	}
 
 	db.query('INSERT INTO users(email, password) VALUES($1, $2)', [

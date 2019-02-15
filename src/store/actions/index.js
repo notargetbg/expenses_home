@@ -47,13 +47,13 @@ export const userLogout = () => {
 	};
 };
 
-export const userRegister = (email, password) => {
+export const userRegister = (email, password, passwordConfirmation) => {
 	return dispatch => {
 		dispatch({
 			type: 'USER_REGISTER_PENDING'
 		});
 
-		return AuthService.register(email, password)
+		return AuthService.register(email, password, passwordConfirmation)
 			.then((res) => {
 				dispatch({
 					type: 'USER_REGISTER_SUCCESS'
