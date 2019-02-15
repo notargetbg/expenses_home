@@ -2,18 +2,18 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../authMiddleware');
 const db = require('../../db');
+const income = require('../../core/models/income.js');
 
 router.get('/', authMiddleware.verifyToken, (req, res, next) => {
-	db.query('SELECT * FROM income WHERE "userID" = $1', [
+	income.getAll(
 		req.tokenData.userId
-	], (err, result) => {
-		if(err) {
-			return next(err);
-		}
-		res.send({
-			income: result.rows
-		});
-	});
+	)
+		.then(result => {
+			res.status(200).send({
+				income: result.rows
+			});
+		})
+		.catch(err => next(err));
 });
 
 router.post('/', authMiddleware.verifyToken, (req, res, next) => {
@@ -21,13 +21,13 @@ router.post('/', authMiddleware.verifyToken, (req, res, next) => {
 		return res.status(400).send({ 'message': 'Input data missing.' });
 	}
 
-	db.query('INSERT INTO income("userID", name, amount, description, date) VALUES($1, $2, $3, $4, $5)', [
+	income.create(
 		req.tokenData.userId,
 		req.body.name,
 		req.body.amount,
 		req.body.description,
 		req.body.date,
-	])
+	)
 		.then(result => {
 			res.status(200).send({ 'message': 'OK.' });
 		})
@@ -41,20 +41,13 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 		return res.status(400).send({ 'message': 'Input data missing.' });
 	}
 
-	db.query(`
-		UPDATE income SET 
-			name = COALESCE($1, name), 
-			amount = COALESCE($2, amount), 
-			description = COALESCE($3, description), 
-			date = COALESCE($4, date) 
-		WHERE id = $5
-	`, [
+	income.update(
 		req.body.name,
 		req.body.amount,
 		req.body.description,
 		req.body.date,
 		req.params.id,
-	])
+	)
 		.then(result => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is updated.' });
@@ -68,9 +61,9 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 });
 
 router.delete('/:id', authMiddleware.verifyToken, (req, res ,next) => {
-	db.query('DELETE FROM income WHERE id = $1', [
+	income.deleteOne(
 		req.params.id,
-	])
+	)
 		.then(result => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is deleted.' });
