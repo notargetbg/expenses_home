@@ -43,8 +43,6 @@ export default class AuthService {
 	static getUser() {
 		const token = AuthService.getToken();
 		return jwt.verify(token, 'jazzFizz');
-
-		// Todo: Call db and get user data ?
 	}
 
 	static isTokenExpired(token) {

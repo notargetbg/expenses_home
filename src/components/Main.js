@@ -11,6 +11,7 @@ class App extends React.Component {
 	componentDidMount() {
 		if (this.props.user.isUserLoggedIn) {
 			this.props.dispatch(actions.getUserData());
+			this.props.dispatch(actions.getUserDetails());
 		};
 	}
 

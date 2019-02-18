@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const authRouter = require('./core/routes/auth.js');
-const usersRouter = require('./core/routes/users.js');
+const userRouter = require('./core/routes/user.js');
 const expensesRouter = require('./core/routes/expenses.js');
 const categoriesRouter = require('./core/routes/categories.js');
 const incomeRouter = require('./core/routes/income.js');
@@ -31,7 +31,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(`${basePath}/auth`, authRouter);
-app.use(`${basePath}/users`, usersRouter);
+app.use(`${basePath}/user`, userRouter);
 app.use(`${basePath}/categories`, categoriesRouter);
 app.use(`${basePath}/expenses`, expensesRouter);
 app.use(`${basePath}/income`, incomeRouter);

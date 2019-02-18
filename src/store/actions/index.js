@@ -35,6 +35,7 @@ export const userLogin = (email, password) => {
 						payload: true
 					});
 					dispatch((getUserData()));
+					dispatch((getUserDetails()));
 				}
 			})
 			.catch(handleError(dispatch));
@@ -88,6 +89,25 @@ export const getUserData = () => {
 					payload: userData
 				});
 			})
-			.catch();
+			.catch(handleError(dispatch));
+	};
+};
+
+export const getUserDetails = () => {
+	return dispatch => {
+		dispatch({
+			type: 'GET_USER_DETAILS_PENDING'
+		});
+
+		API.getUserDetails()
+			.then(res => res.json())
+			.then(res => {
+
+				dispatch({
+					type: 'GET_USER_DETAILS_SUCCESS',
+					payload: res
+				});
+			})
+			.catch(handleError(dispatch));
 	};
 };

@@ -25,8 +25,16 @@ class Home extends React.Component {
 		this.props.dispatch(actions.userLogin(name, password));
 	}
 
+	formatAsDisplayName = (email) => {
+		if (!email) {
+			return;
+		}
+
+		return email.split('@')[0];
+	};
+
 	render() {
-		const { isUserLoggedIn, loginPending, error } = this.props.user;
+		const { isUserLoggedIn, loginPending, error, email } = this.props.user;
 
 		return (
 			<Container className='home-container h-100'>
@@ -34,7 +42,7 @@ class Home extends React.Component {
 					<Card className='my-3'>
 						<CardBody>
 							<img src={defaultImage} className='user-image-big' />
-							<h3 className=''>Hey there, user!</h3>
+							<p className='lead'>Hey there, <strong>{this.formatAsDisplayName(email)}</strong>!</p>
 							<hr className='' />
 						</CardBody>
 					</Card>

@@ -34,4 +34,15 @@ export default class API {
 			}
 		});
 	}
+
+	static getUserDetails() {
+
+		return fetch(`${BASE_API}/user`, {
+			method: 'GET',
+			headers: {
+				...headers,
+				'Authorization': `Bearer ${localStorage.getItem('user_token')}`
+			}
+		});
+	}
 };
