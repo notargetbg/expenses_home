@@ -3,8 +3,17 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Navigation from './layout/Navigation.jsx';
 import View from './layout/View.jsx';
 import Footer from './layout/Footer.jsx';
+import * as actions from '../store/actions/index.js';
+import { connect } from 'react-redux';
 
-export default class App extends React.Component {
+class App extends React.Component {
+
+	componentDidMount() {
+		if (this.props.user.isUserLoggedIn) {
+			this.props.dispatch(actions.getUserData());
+		};
+	}
+
 	render() {
 		return (
 			<Router>
@@ -17,3 +26,13 @@ export default class App extends React.Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+		user: state.user,
+		userData: state.userData
+	};
+};
+
+
+export default connect(mapStateToProps)(App);

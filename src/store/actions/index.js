@@ -1,4 +1,5 @@
 import AuthService from '../../core/services/AuthService';
+import API from '../../core/client';
 
 // Todo: consider moving back to actionCreator which'll get dispatched inside catch...
 function handleError(dispatch) {
@@ -33,6 +34,7 @@ export const userLogin = (email, password) => {
 						type: 'USER_LOGIN_SUCCESS',
 						payload: true
 					});
+					dispatch((getUserData()));
 				}
 			})
 			.catch(handleError(dispatch));
@@ -61,5 +63,31 @@ export const userRegister = (email, password, passwordConfirmation) => {
 				dispatch(userLogin(email, password));
 			})
 			.catch(handleError(dispatch));
+	};
+};
+
+export const getUserData = () => {
+	return dispatch => {
+		dispatch({
+			type: 'GET_USER_DATA_PENDING'
+		});
+
+		Promise.all([
+			API.getUserData('income'),
+			API.getUserData('expenses'),
+			API.getUserData('categories')
+		])
+			.then(res => Promise.all(res.map(r => r.json())))
+			.then(res => {
+				const userData = res.reduce((acc, item) => {
+					return acc = {...acc, ...item};
+				}, {});
+
+				dispatch({
+					type: 'GET_USER_DATA_SUCCESS',
+					payload: userData
+				});
+			})
+			.catch();
 	};
 };

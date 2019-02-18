@@ -1,10 +1,12 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import AuthService from '../../core/services/AuthService';
 import Home from '../views/Home.jsx';
 import About from '../views/About.jsx';
 import Register from '../views/Register.jsx';
-import StatementType from '../views/StatementType.jsx';
-import AuthService from '../../core/services/AuthService';
+import Income from '../views/Income.jsx';
+import Expenses from '../views/Expenses.jsx';
+import Categories from '../views/Categories.jsx';
 
 const ProtectedUserRoute = ({ component: Component, ...rest }) => (
 	<Route {...rest} render={(props) => (
@@ -22,7 +24,9 @@ export default class View extends React.Component {
 				<Route exact path='/' component={Home}/>
 				<Route path='/about' component={About}/>
 				<Route path='/register' component={Register}/>
-				<ProtectedUserRoute path='/statement/:type' component={StatementType}/>
+				<ProtectedUserRoute path='/income' component={Income}/>
+				<ProtectedUserRoute path='/expenses' component={Expenses}/>
+				<ProtectedUserRoute path='/categories' component={Categories}/>
 			</div>
 		);
 	}

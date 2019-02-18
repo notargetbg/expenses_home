@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, Row, Col, Jumbotron } from 'reactstrap';
+import { Container, Row, Col, Jumbotron, Card, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 import LoginForm from '../common/LoginForm.jsx';
+import defaultImage from '../../assets/images/user-default.png';
 
 class Home extends React.Component {
 
@@ -21,28 +22,25 @@ class Home extends React.Component {
 	}
 
 	handleLogin = (name, password) => {
-		this.props.dispatch(
-			actions.userLogin(name, password)
-		);
+		this.props.dispatch(actions.userLogin(name, password));
 	}
 
 	render() {
 		const { isUserLoggedIn, loginPending, error } = this.props.user;
 
 		return (
-			<Container fluid className='home-container h-100'>
+			<Container className='home-container h-100'>
 				{isUserLoggedIn &&
-					<Row>
-						<Col>
-							<Link to='/statement/income' className='main-category main-category--income'>Income</Link>
-						</Col>
-						<Col>
-							<Link to='/statement/expenses' className='main-category main-category--expenses'>Expenses</Link>
-						</Col>
-					</Row>
+					<Card className='my-3'>
+						<CardBody>
+							<img src={defaultImage} className='user-image-big' />
+							<h3 className=''>Hey there, user!</h3>
+							<hr className='' />
+						</CardBody>
+					</Card>
 				}
 				{!isUserLoggedIn &&
-					<Row className='h-100 d-flex justify-content-center'>
+					<div className='h-100 d-flex justify-content-center'>
 						<Jumbotron className='my-auto'>
 							<h1 className=''>Hey there!</h1>
 							<p className='lead'>This is our simple <span className='badge badge-secondary'>expense tracker app</span>,
@@ -51,7 +49,7 @@ class Home extends React.Component {
 
 							<LoginForm isLoginPending={loginPending} handleLogin={this.handleLogin} error={error}/>
 						</Jumbotron>
-					</Row>
+					</div>
 				}
 			</Container>
 		);

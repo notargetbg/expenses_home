@@ -23,4 +23,15 @@ export default class API {
 			body: `email=${email}&password=${password}&passwordConfirmation=${passwordConfirmation}`
 		});
 	}
+
+	static getUserData(type) {
+
+		return fetch(`${BASE_API}/${type}`, {
+			method: 'GET',
+			headers: {
+				...headers,
+				'Authorization': `Bearer ${localStorage.getItem('user_token')}`
+			}
+		});
+	}
 };

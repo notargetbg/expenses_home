@@ -12,6 +12,7 @@ import {
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
+import ControlTabs from '../shared/ControlTabs.jsx';
 
 class Navigation extends React.Component {
 	state = {
@@ -36,6 +37,7 @@ class Navigation extends React.Component {
 				<NavbarBrand tag={Link} to='/'>{'Expense tracker'.toUpperCase()}</NavbarBrand>
 				<NavbarToggler onClick={this.toggle} />
 				<Collapse isOpen={this.state.isOpen} navbar>
+					<ControlTabs />
 					<Nav className='ml-auto' navbar>
 						<NavItem>
 							<NavLink tag={Link} to='/about'>About</NavLink>
@@ -48,7 +50,7 @@ class Navigation extends React.Component {
 						</NavItem>
 						{this.props.user.isUserLoggedIn &&
 						<NavItem>
-							<NavLink href='#' onClick={this.logout}>
+							<NavLink href='#' onClick={this.logout} className='nav-logout-btn'>
 								<Button size='sm'>Logout</Button>
 							</NavLink>
 						</NavItem>
