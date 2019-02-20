@@ -1,11 +1,16 @@
 import React from 'react';
-import { Container, Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
+import * as actions from '../../store/actions/category';
+import { Container, Jumbotron } from 'reactstrap';
 import SmartTable from '../shared/SmartTable';
 
 class Categories extends React.Component {
 	componentDidMount() {
 
+	}
+
+	updateCategory = (...args) => {
+		this.props.dispatch(actions.updateCategory(...args));
 	}
 
 	render() {
@@ -26,7 +31,7 @@ class Categories extends React.Component {
 					</h4>
 				</Jumbotron>
 
-				<SmartTable data={this.props.categories} />
+				<SmartTable handleUpdate={this.updateCategory} data={this.props.categories} />
 			</Container>
 		);
 	}

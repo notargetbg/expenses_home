@@ -24,8 +24,9 @@ app.use(bodyParser.json());
 app.use(function (req, res, next) {
 	// Website you wish to allow to connect
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-	res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-	res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+	res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS');
+	res.setHeader('Access-Control-Allow-Credentials', 'true');
+	res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin, Content-Type, Accept, Authorization');
 	// Pass to next layer of middleware
 	next();
 });

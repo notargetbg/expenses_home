@@ -26,7 +26,7 @@ export default class SmartTable extends React.Component {
 					</thead>
 					<tbody>
 						{items.map(item => (
-							<SmartTableRow item={item} key={`item-${item[1]}`} />
+							<SmartTableRow handleUpdateRow={this.props.handleUpdate} item={item} key={`item-${item[1]}`} />
 						))}
 					</tbody>
 				</Table>
