@@ -23,7 +23,7 @@ export default class SmartTableItem extends React.Component {
 
 		return (
 			<td>
-				{isEditing && this.state.key !== 'id' &&
+				{isEditing && this.state.key !== 'id' && this.state.value &&
 					<Input placeholder={item[0]} onClick={this.handleClick} onChange={this.handleInput} value={this.state.value} />
 				}
 				{!isEditing &&

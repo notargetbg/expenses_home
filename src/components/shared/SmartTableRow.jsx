@@ -4,35 +4,37 @@ import { Button } from 'reactstrap';
 
 export default class SmartTableRow extends React.Component {
 	state = {
-		isEditing: {}
+		isEditing: false
 	}
 
-	toggleItemEditing = (id) => (e) => {
-		const itemState = this.state.isEditing[id];
+	toggleItemEditing = () => {
 		this.setState({
-			isEditing: {
-				...this.state.isEditing,
-				[id]: typeof itemState === 'undefined' ? true : !itemState
-			}
+			isEditing:  !this.state.isEditing,
+			...this.props.item
 		});
+	}
+
+	saveEdit = () => {
+		// 1. check
+		// 2. dispatch to redux
+		// 3. clear local state
 	}
 
 	render() {
 		const { isEditing } = this.state;
-		const { item } = this.props;
-
-		console.log(item)
 
 		return (
-			<tr onClick={this.toggleItemEditing(item.find(x => x[0] === 'id')[1])} >
+			<tr onClick={this.toggleItemEditing} >
 
 				{this.props.item.map((entry, i) => (
-					<SmartTableItem key={`item-${entry[0]}`} isEditing={isEditing[item.find(x => x[0] === 'id')[1]]} item={entry} />
+					<SmartTableItem key={`item-${entry[0]}`} isEditing={isEditing} item={entry} />
 				))}
 
-				<td>
-					<Button>Save</Button>
-				</td>
+				{isEditing &&
+					<td>
+						<Button>Save</Button>
+					</td>
+				}
 
 			</tr>
 		);
