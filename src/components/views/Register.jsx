@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 import { Container, Row, Jumbotron } from 'reactstrap';
-import RegisterForm from '../common/RegisterForm.jsx';
+import RegisterForm from '../common/RegisterForm';
 
 class Register extends React.Component {
 

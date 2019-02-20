@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
-import LoginForm from '../common/LoginForm.jsx';
+import LoginForm from '../common/LoginForm';
 import defaultImage from '../../assets/images/user-default.png';
 
 class Home extends React.Component {

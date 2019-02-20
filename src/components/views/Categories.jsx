@@ -1,13 +1,9 @@
 import React from 'react';
 import { Container, Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
-import SmartTable from '../shared/SmartTable.jsx';
+import SmartTable from '../shared/SmartTable';
 
 class Categories extends React.Component {
-	state = {
-		
-	}
-
 	componentDidMount() {
 
 	}

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import AuthService from '../../core/services/AuthService';
-import Home from '../views/Home.jsx';
-import About from '../views/About.jsx';
-import Register from '../views/Register.jsx';
-import Income from '../views/Income.jsx';
-import Expenses from '../views/Expenses.jsx';
-import Categories from '../views/Categories.jsx';
+import Home from '../views/Home';
+import About from '../views/About';
+import Register from '../views/Register';
+import Income from '../views/Income';
+import Expenses from '../views/Expenses';
+import Categories from '../views/Categories';
 
 const ProtectedUserRoute = ({ component: Component, ...rest }) => (
 	<Route {...rest} render={(props) => (

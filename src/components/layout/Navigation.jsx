@@ -12,7 +12,7 @@ import {
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
-import ControlTabs from '../shared/ControlTabs.jsx';
+import ControlTabs from '../shared/ControlTabs';
 
 class Navigation extends React.Component {
 	state = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
-import SmartTable from '../shared/SmartTable.jsx';
+import SmartTable from '../shared/SmartTable';
 
 class Income extends React.Component {
 	state = {

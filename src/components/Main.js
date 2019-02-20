@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Navigation from './layout/Navigation.jsx';
-import View from './layout/View.jsx';
-import Footer from './layout/Footer.jsx';
-import * as actions from '../store/actions/index.js';
+import * as actions from '../store/actions/index';
 import { connect } from 'react-redux';
+import Navigation from './layout/Navigation';
+import View from './layout/View';
+import Footer from './layout/Footer';
 
 class App extends React.Component {
 
