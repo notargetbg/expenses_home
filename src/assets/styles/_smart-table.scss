@@ -1,4 +1,8 @@
 .smart-table {
     font-size: 16px;
     width: 100%;
+
+    th {
+        cursor: pointer;
+    }
 }

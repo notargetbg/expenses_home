@@ -15,7 +15,7 @@ export default class SmartTableRow extends React.Component {
 
 	toggleItemEditing = () => {
 		this.setState({
-			isEditing:  !this.state.isEditing
+			isEditing: !this.state.isEditing
 		});
 	}
 
@@ -43,7 +43,7 @@ export default class SmartTableRow extends React.Component {
 		const { isEditing, fields } = this.state;
 
 		return (
-			<tr onClick={this.toggleItemEditing} >
+			<tr onClick={this.toggleItemEditing}>
 
 				{Object.entries(fields).map(entry => (
 					<SmartTableItem handleChange={this.handleFieldUpdate} key={`item-${entry[0]}`} isEditing={isEditing} item={entry} />
