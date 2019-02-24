@@ -47,10 +47,21 @@ export default class API {
 	}
 
 	static updateUserCategory(id, name, budget, date, description) {
-		console.log(id);
 
 		return fetch(`${BASE_API}/categories/${id}`, {
 			method: 'PUT',
+			headers: {
+				...headers,
+				'Authorization': `Bearer ${localStorage.getItem('user_token')}`
+			},
+			body: `name=${name}&budget=${budget}&date=${date}&description=${description}`
+		});
+	}
+
+	static createUserCategory(name, budget, date, description) {
+
+		return fetch(`${BASE_API}/categories`, {
+			method: 'POST',
 			headers: {
 				...headers,
 				'Authorization': `Bearer ${localStorage.getItem('user_token')}`

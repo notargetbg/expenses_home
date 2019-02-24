@@ -27,10 +27,6 @@ export default class SmartTableRow extends React.Component {
 	}
 
 	handleFieldUpdate = (field) => (e) => {
-		if (this.state.key === 'id') {
-			return;
-		}
-
 		this.setState({
 			fields: {
 				...this.state.fields,
@@ -52,6 +48,14 @@ export default class SmartTableRow extends React.Component {
 				{isEditing &&
 					<td>
 						<Button size='sm' onClick={this.saveEdit}>Save</Button>
+					</td>
+				}
+
+				{!isEditing &&
+					<td>
+						<Button size='sm remove-btn' onClick={this.deleteItem} className='btn-danger'>
+							X
+						</Button>
 					</td>
 				}
 
