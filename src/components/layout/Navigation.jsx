@@ -34,6 +34,7 @@ class Navigation extends React.Component {
 
 		return (
 			<Navbar color='dark' dark fixed='top' expand='md'>
+				{/* TODO - ADD LOGO */}
 				<NavbarBrand tag={Link} to='/'>{'Expense tracker'.toUpperCase()}</NavbarBrand>
 				<NavbarToggler onClick={this.toggle} />
 				<Collapse isOpen={this.state.isOpen} navbar>
@@ -49,11 +50,11 @@ class Navigation extends React.Component {
 							<NavLink href='#'>Reports</NavLink>
 						</NavItem>
 						{this.props.user.isUserLoggedIn &&
-						<NavItem>
-							<NavLink href='#' onClick={this.logout} className='nav-logout-btn'>
-								<Button size='sm'>Logout</Button>
-							</NavLink>
-						</NavItem>
+							<NavItem>
+								<NavLink href='#' onClick={this.logout} className='nav-logout-btn'>
+									<Button size='sm'>Logout</Button>
+								</NavLink>
+							</NavItem>
 						}
 					</Nav>
 				</Collapse>
@@ -63,7 +64,7 @@ class Navigation extends React.Component {
 }
 
 function mapStateToProps(state) {
-	return {user: state.user};
-};
+	return { user: state.user };
+}
 
 export default withRouter(connect(mapStateToProps)(Navigation));

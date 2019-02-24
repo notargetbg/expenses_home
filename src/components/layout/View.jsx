@@ -10,7 +10,7 @@ import Categories from '../views/Categories';
 
 const ProtectedUserRoute = ({ component: Component, ...rest }) => (
 	<Route {...rest} render={(props) => (
-	  AuthService.isUserLoggedIn()
+		AuthService.isUserLoggedIn()
 			? <Component {...props} />
 			: <Redirect to='/' />
 	)} />
@@ -21,13 +21,13 @@ export default class View extends React.Component {
 
 		return (
 			<div id='ui-view' className='h-100'>
-				<Route exact path='/' component={Home}/>
-				<Route path='/about' component={About}/>
-				<Route path='/register' component={Register}/>
-				<ProtectedUserRoute path='/income' component={Income}/>
-				<ProtectedUserRoute path='/expenses' component={Expenses}/>
-				<ProtectedUserRoute path='/categories' component={Categories}/>
+				<Route exact path='/' component={Home} />
+				<Route path='/about' component={About} />
+				<Route path='/register' component={Register} />
+				<ProtectedUserRoute path='/income' component={Income} />
+				<ProtectedUserRoute path='/expenses' component={Expenses} />
+				<ProtectedUserRoute path='/categories' component={Categories} />
 			</div>
 		);
 	}
-};
+}

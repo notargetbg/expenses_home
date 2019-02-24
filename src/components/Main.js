@@ -12,7 +12,7 @@ class App extends React.Component {
 		if (this.props.user.isUserLoggedIn) {
 			this.props.dispatch(actions.getUserData());
 			this.props.dispatch(actions.getUserDetails());
-		};
+		}
 	}
 
 	render() {
@@ -33,7 +33,6 @@ function mapStateToProps(state) {
 		user: state.user,
 		userData: state.userData
 	};
-};
-
+}
 
 export default connect(mapStateToProps)(App);
