@@ -19,4 +19,4 @@ export default class ControlTabs extends React.Component {
 			</Nav>
 		);
 	}
-};
+}
