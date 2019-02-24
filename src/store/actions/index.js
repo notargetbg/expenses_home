@@ -1,5 +1,6 @@
 import AuthService from '../../core/services/AuthService';
 import API from '../../core/client';
+import * as actionTypes from './actionTypes';
 
 // Todo: consider moving back to actionCreator which'll get dispatched inside catch...
 function handleError(dispatch) {
@@ -7,7 +8,7 @@ function handleError(dispatch) {
 		console.log('Error:', err);
 
 		dispatch({
-			type: 'USER_ERROR',
+			type: actionTypes.USER_ERROR,
 			payload: err
 		});
 	};
@@ -15,14 +16,14 @@ function handleError(dispatch) {
 
 export const clearError = () => {
 	return {
-		type: 'CLEAR_ERROR'
+		type: actionTypes.CLEAR_ERROR
 	};
 };
 
 export const userLogin = (email, password) => {
 	return dispatch => {
 		dispatch({
-			type: 'USER_LOGIN_PENDING'
+			type: actionTypes.USER_LOGIN_PENDING
 		});
 
 		return AuthService.login(email, password)
@@ -31,7 +32,7 @@ export const userLogin = (email, password) => {
 
 				if (AuthService.isUserLoggedIn()) {
 					dispatch({
-						type: 'USER_LOGIN_SUCCESS',
+						type: actionTypes.USER_LOGIN_SUCCESS,
 						payload: true
 					});
 					dispatch((getUserData()));
@@ -46,20 +47,20 @@ export const userLogout = () => {
 	AuthService.logout();
 
 	return {
-		type: 'USER_LOGOUT'
+		type: actionTypes.USER_LOGOUT
 	};
 };
 
 export const userRegister = (email, password, passwordConfirmation) => {
 	return dispatch => {
 		dispatch({
-			type: 'USER_REGISTER_PENDING'
+			type: actionTypes.USER_REGISTER_PENDING
 		});
 
 		return AuthService.register(email, password, passwordConfirmation)
-			.then((res) => {
+			.then(() => {
 				dispatch({
-					type: 'USER_REGISTER_SUCCESS'
+					type: actionTypes.USER_REGISTER_SUCCESS
 				});
 				dispatch(userLogin(email, password));
 			})
@@ -70,7 +71,7 @@ export const userRegister = (email, password, passwordConfirmation) => {
 export const getUserData = () => {
 	return dispatch => {
 		dispatch({
-			type: 'GET_USER_DATA_PENDING'
+			type: actionTypes.GET_USER_DATA_PENDING
 		});
 
 		Promise.all([
@@ -81,11 +82,11 @@ export const getUserData = () => {
 			.then(res => Promise.all(res.map(r => r.json())))
 			.then(res => {
 				const userData = res.reduce((acc, item) => {
-					return acc = {...acc, ...item};
+					return acc = { ...acc, ...item };
 				}, {});
 
 				dispatch({
-					type: 'GET_USER_DATA_SUCCESS',
+					type: actionTypes.GET_USER_DATA_SUCCESS,
 					payload: userData
 				});
 			})
@@ -96,7 +97,7 @@ export const getUserData = () => {
 export const getUserDetails = () => {
 	return dispatch => {
 		dispatch({
-			type: 'GET_USER_DETAILS_PENDING'
+			type: actionTypes.GET_USER_DETAILS_PENDING
 		});
 
 		API.getUserDetails()
@@ -104,7 +105,7 @@ export const getUserDetails = () => {
 			.then(res => {
 
 				dispatch({
-					type: 'GET_USER_DETAILS_SUCCESS',
+					type: actionTypes.GET_USER_DETAILS_SUCCESS,
 					payload: res
 				});
 			})

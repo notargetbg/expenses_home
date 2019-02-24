@@ -3,6 +3,20 @@
         "browser": true,
         "es6": true
     },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            }
+        }
+    },
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -12,9 +26,26 @@
     },
     "parser": "babel-eslint",
     "plugins": [
-        "react"
+        "react",
+        "import"
     ],
     "rules": {
+        "react/prop-types": 0,
+        "import/no-unresolved": 2,
+        "init-declarations": [
+            2,
+            "always"
+        ],
+        "no-unexpected-multiline": 2,
+        "no-catch-shadow": 1,
+        "no-delete-var": 2,
+        "no-label-var": 2,
+        "no-shadow-restricted-names": 2,
+        "no-shadow": 1,
+        "no-undef-init": 0,
+        "no-undef": 2,
+        "no-undefined": 0,
+        "no-unused-vars": 1,
         "indent": [
             "error",
             "tab"
