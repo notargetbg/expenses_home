@@ -69,4 +69,15 @@ export default class API {
 			body: `name=${name}&budget=${budget}&date=${date}&description=${description}`
 		});
 	}
-};
+
+	static deleteUserCategory(id) {
+
+		return fetch(`${BASE_API}/categories/${id}`, {
+			method: 'DELETE',
+			headers: {
+				...headers,
+				'Authorization': `Bearer ${localStorage.getItem('user_token')}`
+			},
+		});
+	}
+}

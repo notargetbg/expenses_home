@@ -39,7 +39,7 @@ class Categories extends React.Component {
 					</h4>
 				</Jumbotron>
 
-				<SmartTable handleUpdate={this.updateCategory} handleCreate={this.createCategory} data={this.props.categories} />
+				<SmartTable handleUpdate={this.updateCategory} handleCreate={this.createCategory} handleDelete={this.deleteCategory} data={this.props.categories} />
 			</Container>
 		);
 	}

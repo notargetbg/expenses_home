@@ -35,6 +35,10 @@ export default class SmartTableRow extends React.Component {
 		});
 	}
 
+	deleteItem = () => {
+		this.props.handleDeleteRow(this.state.fields.id);
+	}
+
 	render() {
 		const { isEditing, fields } = this.state;
 

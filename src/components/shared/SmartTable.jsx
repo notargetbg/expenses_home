@@ -22,6 +22,7 @@ export default class SmartTable extends React.Component {
 			}
 		});
 	}
+
 	addNew = () => {
 		this.props.handleCreate(this.state.addNewItemFields);
 	}
@@ -48,7 +49,7 @@ export default class SmartTable extends React.Component {
 					</thead>
 					<tbody>
 						{items.map(item => (
-							<SmartTableRow handleUpdateRow={this.props.handleUpdate} item={item} key={`item-${item[1]}`} />
+							<SmartTableRow handleUpdateRow={this.props.handleUpdate} handleDeleteRow={this.props.handleDelete} item={item} key={`item-${item[1]}`} />
 						))}
 
 						<tr>
