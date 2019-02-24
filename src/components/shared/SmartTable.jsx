@@ -1,8 +1,8 @@
 import React from 'react';
 import { Table, Button, Input } from 'reactstrap';
 import SmartTableRow from './SmartTableRow';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class SmartTable extends React.Component {
 	state = {
@@ -31,28 +31,24 @@ export default class SmartTable extends React.Component {
 		this.props.handleCreate(this.state.addNewItemFields);
 	}
 
-	transformDate = (item) => {
-		if (item[0] === 'date') {
-			item[1] = new Date(item[1]).toISOString().split('T')[0];
-		}
-	};
-
 	sortByKey = (key, collection) => {
 		return collection.sort((a, b) => {
+			if (key === 'budget' || key === 'amount') {
+				return this.state.orderIsAscending
+					? b[key] - a[key]
+					: a[key] - b[key];
+			}
+
 			if (this.state.orderIsAscending) {
-				return this.getByKey(key, a) < this.getByKey(key, b) ? -1 : 1;
+				return a[key] < b[key] ? -1 : 1;
 			}
 
 			if (!this.state.orderIsAscending) {
-				return this.getByKey(key, a) < this.getByKey(key, b) ? 1 : -1;
+				return a[key] < b[key] ? 1 : -1;
 			}
 
 			return 0;
 		});
-	}
-
-	getByKey = (key, collection) => {
-		return collection.find(x => x[0] === key)[1];
 	}
 
 	setSortKey = (key) => () => {
@@ -62,50 +58,83 @@ export default class SmartTable extends React.Component {
 		});
 	}
 
-	render() {
+	transformDate = (timestamp) => {
+		if(new Date(timestamp)) {
+			return new Date(timestamp).toISOString().split('T')[0];
+		}
+	};
 
+	immutableMove = (arr, from, to) => {
+		return arr.reduce((prev, current, idx, self) => {
+			if (from === to) {
+				prev.push(current);
+			}
+			if (idx === from) {
+				return prev;
+			}
+			if (from < to) {
+				prev.push(current);
+			}
+			if (idx === to) {
+				prev.push(self[from]);
+			}
+			if (from > to) {
+				prev.push(current);
+			}
+			return prev;
+		}, []);
+	}
+
+	render() {
 		const { data } = this.props;
 
-		const items = data.map(item => {
-			return Object.entries(item).filter(x => {
-				this.transformDate(x);
-				return x[0] !== 'userID';
-			});
-		});
+		const items = data.map(row =>
+			Object.keys(row)
+				.filter(key => key !== 'userID')
+				.reduce((acc, key) => {
+					if (key === 'date') {
+						row[key] = this.transformDate(row[key]);
+					}
+					return {
+						...acc,
+						[key]: row[key]
+					};
+				}, {})
+		);
 
 		if (items.length === 0) {
 			return 'loading...';
 		}
+
+		const columnHeadings = Object.keys(items[0]);
 
 		return (
 			<div className='smart-table'>
 				<Table hover responsive>
 					<thead>
 						<tr>
-							{items[0].map(x =>
-								<th className='text-capitalize' key={x[0]} onClick={this.setSortKey(x[0])}>
-									{x[0]}
-									{/* <FontAwesomeIcon icon={this.state.orderIsAscending ? faCaretUp : faCaretDown} /> */}
+							{columnHeadings.map(heading =>
+								<th className='text-capitalize' key={heading} onClick={this.setSortKey(heading)}>
+									{heading}
+									<FontAwesomeIcon icon={this.state.orderIsAscending ? faCaretUp : faCaretDown} />
 								</th>)}
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						{this.sortByKey(this.state.sortKey, items).map((item) => (
+						{this.sortByKey(this.state.sortKey, items).map(item => (
 							<SmartTableRow handleUpdateRow={this.props.handleUpdate}
 								handleDeleteRow={this.props.handleDelete}
 								item={item}
-								key={`table-row-${item.find(x => x[0] === 'id')[1]}`}
+								key={item['id']}
 							/>
 						))}
 
 						<tr>
-							{items[0].map(item => (
-								<td key={`item-${item[0]}`}>
-									{item[0] !== 'id' &&
-										<Input onChange={this.handleFieldUpdate(item[0])}
-											key={`item-${item[1]}`}
-										/>
+							{columnHeadings.map(heading => (
+								<td key={heading}>
+									{heading !== 'id' &&
+										<Input onChange={this.handleFieldUpdate(heading)}/>
 									}
 								</td>
 							))}

@@ -5,12 +5,10 @@ import SmartTableItem from './SmartTableItem';
 export default class SmartTableRow extends React.Component {
 	state = {
 		isEditing: false,
-		fields: this.props.item.reduce((acc, x) => {
-			return {
-				...acc,
-				[x[0]]: x[1]
-			};
-		}, {})
+		fields: Object.keys(this.props.item).reduce((acc, key) => ({
+			...acc,
+			[key]: this.props.item[key]
+		}), {})
 	}
 
 	toggleItemEditing = () => {
@@ -45,8 +43,13 @@ export default class SmartTableRow extends React.Component {
 		return (
 			<tr onClick={this.toggleItemEditing}>
 
-				{Object.entries(fields).map(entry => (
-					<SmartTableItem handleChange={this.handleFieldUpdate} key={`item-${entry[0]}`} isEditing={isEditing} item={entry} />
+				{Object.keys(fields).map(key => (
+					<SmartTableItem handleChange={this.handleFieldUpdate}
+						key={key}
+						isEditing={isEditing}
+						itemValue={fields[key]}
+						itemKey={key}
+					/>
 				))}
 
 				{isEditing &&

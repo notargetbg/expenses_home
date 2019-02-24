@@ -46,7 +46,8 @@ export default class API {
 		});
 	}
 
-	static updateUserCategory(id, name, budget, date, description) {
+	// Category
+	static updateCategory(id, name, budget, date, description) {
 
 		return fetch(`${BASE_API}/categories/${id}`, {
 			method: 'PUT',
@@ -58,7 +59,7 @@ export default class API {
 		});
 	}
 
-	static createUserCategory(name, budget, date, description) {
+	static createCategory(name, budget, date, description) {
 
 		return fetch(`${BASE_API}/categories`, {
 			method: 'POST',
@@ -70,7 +71,7 @@ export default class API {
 		});
 	}
 
-	static deleteUserCategory(id) {
+	static deleteCategory(id) {
 
 		return fetch(`${BASE_API}/categories/${id}`, {
 			method: 'DELETE',

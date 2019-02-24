@@ -7,21 +7,23 @@ export default class SmartTableItem extends React.Component {
 	}
 
 	render() {
-		const { item, isEditing, handleChange } = this.props;
-		const itemKey = item[0];
-		const itemValue = item[1] || '';
+		const { itemKey, itemValue, isEditing, handleChange } = this.props;
 
 		return (
 			<td>
 				{isEditing && itemKey !== 'id' &&
-					<Input placeholder={item[0]} onClick={this.handleClick} onChange={handleChange(itemKey)} value={itemValue} />
+					<Input placeholder={itemKey}
+						onClick={this.handleClick}
+						onChange={handleChange(itemKey)}
+						value={itemValue || ''}
+					/>
 				}
 				{!isEditing &&
 					<span>
-						{item[1]}
+						{itemValue}
 					</span>
 				}
 			</td>
 		);
 	}
-};
+}

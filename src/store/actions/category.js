@@ -21,7 +21,7 @@ export const updateCategory = (args) => {
 			type: 'CATEGORY_UPDATE_PENDING'
 		});
 
-		return API.updateUserCategory(id, name, budget, date, description)
+		return API.updateCategory(id, name, budget, date, description)
 			.then((res) => {
 				dispatch({
 					type: 'CATEGORY_UPDATE_SUCCESS',
@@ -45,7 +45,7 @@ export const createCategory = (args) => {
 		});
 
 
-		return API.createUserCategory(name, budget, date, description)
+		return API.createCategory(name, budget, date, description)
 			.then(res => {
 				dispatch({
 					type: 'CATEGORY_CREATE_SUCCESS',
@@ -63,7 +63,7 @@ export const deleteCategory = (id) => {
 			type: 'CATEGORY_DELETE_PENDING'
 		});
 
-		return API.deleteUserCategory(id)
+		return API.deleteCategory(id)
 			.then(res => {
 				dispatch({
 					type: 'CATEGORY_DELETE_SUCCESS',
