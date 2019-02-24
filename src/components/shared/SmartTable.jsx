@@ -58,30 +58,30 @@ export default class SmartTable extends React.Component {
 		});
 	}
 
-	transformDate = (timestamp) => {
+	formatDate = (timestamp) => {
 		if(new Date(timestamp)) {
 			return new Date(timestamp).toISOString().split('T')[0];
 		}
 	};
 
 	immutableMove = (arr, from, to) => {
-		return arr.reduce((prev, current, idx, self) => {
+		return arr.reduce((acc, current, idx, self) => {
 			if (from === to) {
-				prev.push(current);
+				acc.push(current);
 			}
 			if (idx === from) {
-				return prev;
+				return acc;
 			}
 			if (from < to) {
-				prev.push(current);
+				acc.push(current);
 			}
 			if (idx === to) {
-				prev.push(self[from]);
+				acc.push(self[from]);
 			}
 			if (from > to) {
-				prev.push(current);
+				acc.push(current);
 			}
-			return prev;
+			return acc;
 		}, []);
 	}
 
@@ -93,7 +93,7 @@ export default class SmartTable extends React.Component {
 				.filter(key => key !== 'userID')
 				.reduce((acc, key) => {
 					if (key === 'date') {
-						row[key] = this.transformDate(row[key]);
+						row[key] = this.formatDate(row[key]);
 					}
 					return {
 						...acc,
