@@ -53,7 +53,7 @@ export default class SmartTable extends React.Component {
 
 						<tr>
 							{items[0].map(item => (
-								<td>
+								<td key={`item-${item[0]}`}>
 									{item[0] !== 'id' &&
 										<Input onChange={this.handleFieldUpdate(item[0])} key={`item-${item[1]}`} />
 									}

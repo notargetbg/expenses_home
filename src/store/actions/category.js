@@ -2,6 +2,7 @@ import API from '../../core/client';
 
 function handleError(dispatch) {
 	return err => {
+		/* eslint-disable no-console */
 		console.log('Error:', err);
 
 		dispatch({
