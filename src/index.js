@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/Main';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
-import rootReducer from './store/reducers';
+import { rootReducer } from './store/reducers';
 import ReduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import 'bootstrap/scss/bootstrap.scss';

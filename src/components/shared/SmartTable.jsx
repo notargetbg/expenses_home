@@ -5,18 +5,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class SmartTable extends React.Component {
-	state = {
-		addNewItemFields: Object.entries(this.props.data[0])
+	constructor(props) {
+		super(props);
+
+		const fields = props.data[0] || [];
+		const filteredFields = Object.entries(fields)
 			.filter(x => x[0] !== 'userID' && x[0] !== 'id')
 			.reduce((acc, x) => {
 				return {
 					...acc,
 					[x[0]]: ''
 				};
-			}, {}),
-		sortKey: 'id',
-		orderIsAscending: true
-	};
+			}, {});
+
+		this.state = {
+			addNewItemFields: filteredFields,
+			sortKey: 'id',
+			orderIsAscending: true
+		};
+	}
 
 	handleFieldUpdate = (field) => (e) => {
 		this.setState({
@@ -88,6 +95,8 @@ export default class SmartTable extends React.Component {
 	render() {
 		const { data } = this.props;
 
+		console.log(this);
+
 		const items = data.map(row =>
 			Object.keys(row)
 				.filter(key => key !== 'userID')
@@ -101,10 +110,6 @@ export default class SmartTable extends React.Component {
 					};
 				}, {})
 		);
-
-		if (items.length === 0) {
-			return 'loading...';
-		}
 
 		const columnHeadings = Object.keys(items[0]);
 
