@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import SmartTable from '../shared/SmartTable';
 
 class Income extends React.Component {
-	state = {
-
-	}
+	state = {};
 
 	componentDidMount() {
 		console.log(this.props);
@@ -19,16 +17,11 @@ class Income extends React.Component {
 			return null;
 		}
 
-
 		return (
 			<Container>
 				<Jumbotron>
-					<h1>
-						Your Income
-					</h1>
-					<h4 className='lead'>
-						Edit or add to the list
-					</h4>
+					<h1>Your Income</h1>
+					<h4 className='lead'>Edit or add to the list</h4>
 				</Jumbotron>
 
 				<SmartTable data={this.props.income} />

@@ -3,17 +3,11 @@
         "browser": true,
         "es6": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
-    ],
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
     "settings": {
         "import/resolver": {
             "node": {
-                "extensions": [
-                    ".js",
-                    ".jsx"
-                ]
+                "extensions": [".js", ".jsx"]
             }
         }
     },
@@ -25,17 +19,11 @@
         "sourceType": "module"
     },
     "parser": "babel-eslint",
-    "plugins": [
-        "react",
-        "import"
-    ],
+    "plugins": ["react", "import"],
     "rules": {
         "react/prop-types": 0,
         "import/no-unresolved": 2,
-        "init-declarations": [
-            2,
-            "always"
-        ],
+        "init-declarations": [2, "always"],
         "no-unexpected-multiline": 2,
         "no-catch-shadow": 1,
         "no-delete-var": 2,
@@ -46,26 +34,11 @@
         "no-undef": 2,
         "no-undefined": 0,
         "no-unused-vars": 1,
-        "indent": [
-            "error",
-            "tab"
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "jsx-quotes": [
-            "error",
-            "prefer-single"
-        ],
+        "indent": ["error", "tab"],
+        "linebreak-style": ["error", "windows"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "jsx-quotes": ["error", "prefer-single"],
         "no-trailing-spaces": [
             "error",
             {
