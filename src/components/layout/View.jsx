@@ -9,16 +9,20 @@ import Expenses from '../views/Expenses';
 import Categories from '../views/Categories';
 
 const ProtectedUserRoute = ({ component: Component, ...rest }) => (
-	<Route {...rest} render={(props) => (
-		AuthService.isUserLoggedIn()
-			? <Component {...props} />
-			: <Redirect to='/' />
-	)} />
+	<Route
+		{...rest}
+		render={props =>
+			AuthService.isUserLoggedIn() ? (
+				<Component {...props} />
+			) : (
+				<Redirect to='/' />
+			)
+		}
+	/>
 );
 
 export default class View extends React.Component {
 	render() {
-
 		return (
 			<div id='ui-view' className='h-100'>
 				<Route exact path='/' component={Home} />
