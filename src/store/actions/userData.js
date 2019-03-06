@@ -1,6 +1,5 @@
 import API from '../../core/client';
 import * as actionTypes from './actionTypes';
-import { getUserData } from './index';
 
 function handleError(dispatch) {
 	return err => {
@@ -14,76 +13,93 @@ function handleError(dispatch) {
 	};
 }
 
-export const getCategories = () => {
-	return dispatch => {
-		dispatch({
-			type: actionTypes.GET_CATEGORIES_PENDING
-		});
+function makeGetUserDataType(dataType) {
+	return () => {
+		return dispatch => {
+			dispatch({
+				type: actionTypes[`GET_${dataType}_PENDING`]
+			});
 
 
-		return API.getUserData('categories')
-			.then(res => res.json())
-			.then(res => {
-				dispatch({
-					type: actionTypes.GET_CATEGORIES_SUCCESS,
-					payload: res
-				});
-			})
-			.catch(handleError(dispatch));
+			return API.getUserData(dataType.toLowerCase())
+				.then(res => res.json())
+				.then(res => {
+					dispatch({
+						type: actionTypes[`GET_${dataType}_SUCCESS`],
+						payload: res
+					});
+				})
+				.catch(handleError(dispatch));
+		};
 	};
-};
+}
 
-export const updateCategory = (params) => {
-	return dispatch => {
-		dispatch({
-			type: actionTypes.CATEGORIES_UPDATE_PENDING
-		});
+function makeUpdateUserDataType(dataType) {
+	return params => {
+		return dispatch => {
+			dispatch({
+				type: actionTypes[`${dataType}_UPDATE_PENDING`]
+			});
 
-		return API.updateCategory(params)
-			.then(res => res.json())
-			.then(res => {
-				dispatch({
-					type: actionTypes.CATEGORIES_UPDATE_SUCCESS,
-					payload: res.result
-				});
-			})
-			.catch(handleError(dispatch));
+			return API.updateDataType(params, dataType.toLowerCase())
+				.then(res => res.json())
+				.then(res => {
+					dispatch({
+						type: actionTypes[`${dataType}_UPDATE_SUCCESS`],
+						payload: res.result
+					});
+				})
+				.catch(handleError(dispatch));
+		};
 	};
-};
+}
 
-export const createCategory = (params) => {
-	return dispatch => {
-		dispatch({
-			type: actionTypes.CATEGORIES_CREATE_PENDING
-		});
+function makeCreateUserDataType(dataType) {
+	return (params) => {
+		return dispatch => {
+			dispatch({
+				type: actionTypes[`${dataType}_CREATE_PENDING`]
+			});
 
-		return API.createCategory(params)
-			.then(res => res.json())
-			.then(res => {
-				dispatch({
-					type: actionTypes.CATEGORIES_CREATE_SUCCESS,
-					payload: res
-				});
-			})
-			.catch(handleError(dispatch));
+			return API.createDataType(params, dataType.toLowerCase())
+				.then(res => res.json())
+				.then(res => {
+					dispatch({
+						type: actionTypes[`${dataType}_CREATE_SUCCESS`],
+						payload: res
+					});
+				})
+				.catch(handleError(dispatch));
+		};
 	};
-};
+}
 
-export const deleteCategory = (id) => {
-	return dispatch => {
-		dispatch({
-			type: 'CATEGORY_DELETE_PENDING'
-		});
+function makeDeleteUserDataType(dataType) {
+	return (id) => {
+		return dispatch => {
+			dispatch({
+				type: actionTypes[`${dataType}_DELETE_PENDING`]
+			});
 
-		return API.deleteCategory(id)
-			.then(res => res.json())
-			.then(res => {
-				dispatch({
-					type: 'CATEGORY_DELETE_SUCCESS',
-					payload: res
-				});
-				dispatch(getUserData());
-			})
-			.catch(handleError(dispatch));
+			return API.deleteDataType(id, dataType.toLowerCase())
+				.then(res => res.json())
+				.then(res => {
+					dispatch({
+						type: actionTypes[`${dataType}_DELETE_SUCCESS`],
+						payload: res
+					});
+				})
+				.catch(handleError(dispatch));
+		};
 	};
-};
+}
+
+export const getCategories = makeGetUserDataType('CATEGORIES');
+export const updateCategory = makeUpdateUserDataType('CATEGORIES');
+export const createCategory = makeCreateUserDataType('CATEGORIES');
+export const deleteCategory = makeDeleteUserDataType('CATEGORIES');
+
+export const getIncome = makeGetUserDataType('INCOME');
+export const updateIncome = makeUpdateUserDataType('INCOME');
+export const createIncome = makeCreateUserDataType('INCOME');
+export const deleteIncome = makeDeleteUserDataType('INCOME');

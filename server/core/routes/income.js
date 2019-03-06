@@ -30,7 +30,10 @@ router.post('/', authMiddleware.verifyToken, (req, res, next) => {
 		req.body.date
 	)
 		.then(result => {
-			res.status(200).send({ 'message': 'OK.' });
+			res.status(200).send({
+				'message': 'OK.',
+				'result': result.rows[0]
+			});
 		})
 		.catch(err => {
 			next(err);
@@ -47,13 +50,16 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 		req.body.amount,
 		req.body.description,
 		req.body.date,
-		req.params.id,
+		req.params.id
 	)
 		.then(result => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is updated.' });
 			} else {
-				res.status(200).send({ 'message': 'OK.' });
+				res.status(200).send({
+					'message': 'OK.',
+					'result': result.rows[0]
+				});
 			}
 		})
 		.catch(err => {
@@ -63,13 +69,16 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 
 router.delete('/:id', authMiddleware.verifyToken, (req, res ,next) => {
 	income.deleteOne(
-		req.params.id,
+		req.params.id
 	)
 		.then(result => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is deleted.' });
 			} else {
-				res.status(200).send({ 'message': 'OK.' });
+				res.status(200).send({
+					'message': 'OK.',
+					'result': result.rows[0]
+				});
 			}
 		})
 		.catch(err => {

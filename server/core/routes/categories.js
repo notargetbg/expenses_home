@@ -70,7 +70,10 @@ router.delete('/:id', authMiddleware.verifyToken, (req, res ,next) => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is deleted.' });
 			} else {
-				res.status(200).send({ 'message': 'OK.' });
+				res.status(200).send({
+					'message': 'OK.',
+					'result': result.rows[0]
+				});
 			}
 		})
 		.catch(err => next(err));

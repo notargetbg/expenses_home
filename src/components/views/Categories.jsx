@@ -5,10 +5,6 @@ import { Container, Jumbotron } from 'reactstrap';
 import SmartTable from '../shared/SmartTable';
 
 class Categories extends React.Component {
-	componentDidMount() {
-
-	}
-
 	updateCategory = (...fields) => {
 		this.props.dispatch(actions.updateCategory(...fields));
 	}

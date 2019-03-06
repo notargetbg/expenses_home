@@ -1,13 +1,20 @@
 import React from 'react';
-import { Container, Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
+import * as actions from '../../store/actions/userData';
+import { Container, Jumbotron } from 'reactstrap';
 import SmartTable from '../shared/SmartTable';
 
 class Income extends React.Component {
-	state = {};
+	updateIncome = (...fields) => {
+		this.props.dispatch(actions.updateIncome(...fields));
+	}
 
-	componentDidMount() {
-		console.log(this.props);
+	createIncome = (...fields) => {
+		this.props.dispatch(actions.createIncome(...fields));
+	}
+
+	deleteIncome = (id) => {
+		this.props.dispatch(actions.deleteIncome(id));
 	}
 
 	render() {
@@ -24,7 +31,12 @@ class Income extends React.Component {
 					<h4 className='lead'>Edit or add to the list</h4>
 				</Jumbotron>
 
-				<SmartTable data={this.props.income} />
+				<SmartTable
+					handleUpdate={this.updateIncome}
+					handleCreate={this.createIncome}
+					handleDelete={this.deleteIncome}
+					data={this.props.income}
+				/>
 			</Container>
 		);
 	}

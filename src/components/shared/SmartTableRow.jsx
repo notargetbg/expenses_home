@@ -17,11 +17,9 @@ export default class SmartTableRow extends React.Component {
 		});
 	}
 
-	saveEdit = () => {
-		// 1. check
+	saveEdit = (e) => {
+		e.stopPropagation();
 		this.props.handleUpdateRow(this.state.fields);
-		// 2. dispatch to redux
-		// 3. clear local state
 	}
 
 	handleFieldUpdate = (field) => (e) => {
@@ -33,7 +31,8 @@ export default class SmartTableRow extends React.Component {
 		});
 	}
 
-	deleteItem = () => {
+	deleteItem = (e) => {
+		e.stopPropagation();
 		this.props.handleDeleteRow(this.state.fields.id);
 	}
 

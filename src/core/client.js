@@ -47,9 +47,9 @@ export default class API {
 	}
 
 	// Todo: do these dynamically based on userDataType requested
-	static updateCategory(params) {
+	static updateDataType(params, dataType) {
 
-		return fetch(`${BASE_API}/categories/${params.id}`, {
+		return fetch(`${BASE_API}/${dataType}/${params.id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -59,9 +59,9 @@ export default class API {
 		});
 	}
 
-	static createCategory(params) {
+	static createDataType(params, dataType) {
 
-		return fetch(`${BASE_API}/categories`, {
+		return fetch(`${BASE_API}/${dataType}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -71,9 +71,9 @@ export default class API {
 		});
 	}
 
-	static deleteCategory(id) {
+	static deleteDataType(id, dataType) {
 
-		return fetch(`${BASE_API}/categories/${id}`, {
+		return fetch(`${BASE_API}/${dataType}/${id}`, {
 			method: 'DELETE',
 			headers: {
 				...headers,

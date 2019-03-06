@@ -43,6 +43,15 @@ export default function createUserDataReducer(dataType = '') {
 			};
 		}
 
+		if (action.type === `${dataType}_DELETE_SUCCESS`) {
+			return {
+				...state,
+				items: state.items.filter(item => {
+					return item.id !== action.payload.result.id;
+				})
+			};
+		}
+
 		return state;
 	};
 }

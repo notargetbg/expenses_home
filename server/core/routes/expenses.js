@@ -70,7 +70,7 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 router.delete('/:id', authMiddleware.verifyToken, (req, res ,next) => {
 
 	expense.deleteOne(
-		req.params.id,
+		req.params.id
 	)
 		.then(result => {
 			if(result.rowCount === 0) {
