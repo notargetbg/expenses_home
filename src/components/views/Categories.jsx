@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/category';
+import * as actions from '../../store/actions/userData';
 import { Container, Jumbotron } from 'reactstrap';
 import SmartTable from '../shared/SmartTable';
 

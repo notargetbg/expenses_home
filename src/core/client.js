@@ -46,28 +46,28 @@ export default class API {
 		});
 	}
 
-	// Category
-	static updateCategory(id, name, budget, date, description) {
+	// Todo: do these dynamically based on userDataType requested
+	static updateCategory(params) {
 
-		return fetch(`${BASE_API}/categories/${id}`, {
+		return fetch(`${BASE_API}/categories/${params.id}`, {
 			method: 'PUT',
 			headers: {
 				...headers,
 				'Authorization': `Bearer ${localStorage.getItem('user_token')}`
 			},
-			body: `name=${name}&budget=${budget}&date=${date}&description=${description}`
+			body: JSON.stringify(params)
 		});
 	}
 
-	static createCategory(name, budget, date, description) {
+	static createCategory(params) {
 
 		return fetch(`${BASE_API}/categories`, {
 			method: 'POST',
 			headers: {
-				...headers,
+				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${localStorage.getItem('user_token')}`
 			},
-			body: `name=${name}&budget=${budget}&date=${date}&description=${description}`
+			body: JSON.stringify(params)
 		});
 	}
 

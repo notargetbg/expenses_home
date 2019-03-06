@@ -51,23 +51,18 @@ export const updateCategory = (args) => {
 	};
 };
 
-export const createCategory = (args) => {
-	const { name, budget, date, description } = args;
+export const createCategory = (params) => {
 
 	return dispatch => {
 		dispatch({
-			type: 'CATEGORY_CREATE_PENDING'
-		});
-		dispatch({
-			type: actionTypes.GET_USER_DATA_PENDING
+			type: actionTypes.CREATE_CATEGORIES_PENDING
 		});
 
-
-		return API.createCategory(name, budget, date, description)
+		return API.createCategory(params)
 			.then(res => {
 				// Todo: update this when api returns updated row data...
 				dispatch({
-					type: 'CATEGORY_CREATE_SUCCESS',
+					type: actionTypes.CATEGORY_CREATE_SUCCESS,
 					payload: res
 				});
 				dispatch(getUserData());

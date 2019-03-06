@@ -19,19 +19,20 @@ router.get('/', authMiddleware.verifyToken, (req, res, next) => {
 });
 
 router.post('/', authMiddleware.verifyToken, (req, res, next) => {
-	if (!req.body.name || !req.body.budget || !req.body.date) {
-		return res.status(400).send({ 'message': 'Input data missing.' });
+	if (!req.body.name) {
+		return res.status(400).send({ 'message': 'Name is missing.' });
 	}
 
 	category.create(
 		req.tokenData.userId,
 		req.body.name,
-		req.body.budget,
-		req.body.description,
-		req.body.date,
+		req.body.description
 	)
 		.then(result => {
-			res.status(200).send({ 'message': 'OK.' });
+			res.status(200).send({
+				'message': 'OK.',
+				'result': result.rows[0]
+			});
 		})
 		.catch(err => {
 			next(err);
@@ -39,8 +40,8 @@ router.post('/', authMiddleware.verifyToken, (req, res, next) => {
 });
 
 router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
-	if (!req.body.name && !req.body.budget && !req.body.date) {
-		return res.status(400).send({ 'message': 'Input data missing.' });
+	if (!req.body.name) {
+		return res.status(400).send({ 'message': 'Name is required.' });
 	}
 
 	category.update(
@@ -48,13 +49,16 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 		req.body.budget,
 		req.body.description,
 		req.body.date,
-		req.params.id,
+		req.params.id
 	)
 		.then(result => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is updated.' });
 			} else {
-				res.status(200).send({ 'message': 'OK.' });
+				res.status(200).send({
+					'message': 'OK.',
+					'result': result.rows[0]
+				});
 			}
 		})
 		.catch(err => next(err));
@@ -62,7 +66,7 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 
 router.delete('/:id', authMiddleware.verifyToken, (req, res ,next) => {
 	category.deleteOne(
-		req.params.id,
+		req.params.id
 	)
 		.then(result => {
 			if(result.rowCount === 0) {
