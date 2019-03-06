@@ -53,7 +53,7 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 		req.body.amount,
 		req.body.description,
 		req.body.date,
-		req.params.id,
+		req.params.id
 	)
 		.then(result => {
 			if(result.rowCount === 0) {

@@ -23,7 +23,15 @@ export default function createUserDataReducer(dataType = '') {
 			};
 		}
 
-		if (action.type === `UPDATE_${dataType}_SUCCESS`) {
+		if (action.type === `${dataType}_CREATE_SUCCESS`) {
+			return {
+				...state,
+				items: [...state.items, action.payload.result],
+				isLoading: false
+			};
+		}
+
+		if (action.type === `${dataType}_UPDATE_SUCCESS`) {
 			return {
 				...state,
 				items: state.items.map(item => {

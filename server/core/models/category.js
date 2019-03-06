@@ -14,7 +14,7 @@ function update(...args) {
 	return db.query(`
 	UPDATE categories SET 
 		name = COALESCE($1, name),
-		description = COALESCE($2, description),
+		description = COALESCE($2, description)
 	WHERE id = $3
 	RETURNING *
 	`, args);

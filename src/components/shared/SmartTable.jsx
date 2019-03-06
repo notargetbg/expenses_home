@@ -7,7 +7,7 @@ import { formatDate, sortByKey  } from '../../core/helpers.js';
 
 export default class SmartTable extends React.Component {
 	state = {
-		addNewItemFields: [],
+		addNewItemFields: {},
 		sortKey: 'id',
 		isOrderAscending: true
 	};
@@ -22,6 +22,7 @@ export default class SmartTable extends React.Component {
 	}
 
 	addNew = () => {
+		this.setState({addNewItemFields: {}});
 		this.props.handleCreate(this.state.addNewItemFields);
 	}
 
@@ -79,7 +80,7 @@ export default class SmartTable extends React.Component {
 							{filteredFields.map(field => (
 								<td key={field}>
 									{field !== 'id' &&
-										<Input onChange={this.handleFieldUpdate(field)}/>
+										<Input value={this.state.addNewItemFields[field] || ''} onChange={this.handleFieldUpdate(field)}/>
 									}
 								</td>
 							))}

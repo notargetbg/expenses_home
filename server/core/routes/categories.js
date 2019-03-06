@@ -46,9 +46,7 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 
 	category.update(
 		req.body.name,
-		req.body.budget,
 		req.body.description,
-		req.body.date,
 		req.params.id
 	)
 		.then(result => {

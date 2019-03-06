@@ -27,7 +27,7 @@ router.post('/', authMiddleware.verifyToken, (req, res, next) => {
 		req.body.name,
 		req.body.amount,
 		req.body.description,
-		req.body.date,
+		req.body.date
 	)
 		.then(result => {
 			res.status(200).send({ 'message': 'OK.' });

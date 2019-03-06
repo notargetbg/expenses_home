@@ -52,7 +52,7 @@ export default class API {
 		return fetch(`${BASE_API}/categories/${params.id}`, {
 			method: 'PUT',
 			headers: {
-				...headers,
+				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${localStorage.getItem('user_token')}`
 			},
 			body: JSON.stringify(params)

@@ -22,6 +22,7 @@ export const getCategories = () => {
 
 
 		return API.getUserData('categories')
+			.then(res => res.json())
 			.then(res => {
 				dispatch({
 					type: actionTypes.GET_CATEGORIES_SUCCESS,
@@ -32,40 +33,37 @@ export const getCategories = () => {
 	};
 };
 
-export const updateCategory = (args) => {
-	const { id, name, budget, date, description } = args;
+export const updateCategory = (params) => {
 	return dispatch => {
 		dispatch({
-			type: actionTypes.UPDATE_CATEGORIES_PENDING
+			type: actionTypes.CATEGORIES_UPDATE_PENDING
 		});
 
-		return API.updateCategory(id, name, budget, date, description)
-			.then((res) => {
+		return API.updateCategory(params)
+			.then(res => res.json())
+			.then(res => {
 				dispatch({
-					type: actionTypes.UPDATE_CATEGORIES_SUCCESS,
-					payload: res
+					type: actionTypes.CATEGORIES_UPDATE_SUCCESS,
+					payload: res.result
 				});
-				dispatch(getUserData());
 			})
 			.catch(handleError(dispatch));
 	};
 };
 
 export const createCategory = (params) => {
-
 	return dispatch => {
 		dispatch({
-			type: actionTypes.CREATE_CATEGORIES_PENDING
+			type: actionTypes.CATEGORIES_CREATE_PENDING
 		});
 
 		return API.createCategory(params)
+			.then(res => res.json())
 			.then(res => {
-				// Todo: update this when api returns updated row data...
 				dispatch({
-					type: actionTypes.CATEGORY_CREATE_SUCCESS,
+					type: actionTypes.CATEGORIES_CREATE_SUCCESS,
 					payload: res
 				});
-				dispatch(getUserData());
 			})
 			.catch(handleError(dispatch));
 	};
@@ -78,6 +76,7 @@ export const deleteCategory = (id) => {
 		});
 
 		return API.deleteCategory(id)
+			.then(res => res.json())
 			.then(res => {
 				dispatch({
 					type: 'CATEGORY_DELETE_SUCCESS',
