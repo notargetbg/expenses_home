@@ -5,7 +5,7 @@ import SmartTable from '../shared/SmartTable';
 
 class Expenses extends React.Component {
 	state = {
-		
+
 	}
 
 	componentDidMount() {
@@ -38,7 +38,7 @@ class Expenses extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		expenses: state.userData.expenses
+		expenses: state.expenses
 	};
 }
 

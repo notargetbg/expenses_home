@@ -10,7 +10,8 @@ router.get('/', authMiddleware.verifyToken, (req, res, next) => {
 	)
 		.then(result => {
 			res.status(200).send({
-				income: result.rows
+				income: result.rows,
+				fields: result.fields.map(field => field.name)
 			});
 		})
 		.catch(err => next(err));

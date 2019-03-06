@@ -32,7 +32,7 @@ class Income extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		income: state.userData.income
+		income: state.income
 	};
 }
 

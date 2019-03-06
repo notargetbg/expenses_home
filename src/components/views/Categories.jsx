@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/category';
-import { Container, Jumbotron, Button, Input } from 'reactstrap';
+import { Container, Jumbotron } from 'reactstrap';
 import SmartTable from '../shared/SmartTable';
 
 class Categories extends React.Component {
@@ -24,6 +24,7 @@ class Categories extends React.Component {
 	render() {
 		const { categories } = this.props;
 
+
 		if (!categories) {
 			return null;
 		}
@@ -39,7 +40,12 @@ class Categories extends React.Component {
 					</h4>
 				</Jumbotron>
 
-				<SmartTable handleUpdate={this.updateCategory} handleCreate={this.createCategory} handleDelete={this.deleteCategory} data={this.props.categories} />
+				<SmartTable
+					handleUpdate={this.updateCategory}
+					handleCreate={this.createCategory}
+					handleDelete={this.deleteCategory}
+					data={categories}
+				/>
 			</Container>
 		);
 	}
@@ -47,7 +53,7 @@ class Categories extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		categories: state.userData.categories
+		categories: state.categories
 	};
 }
 

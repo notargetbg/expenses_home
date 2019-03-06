@@ -11,7 +11,8 @@ router.get('/', authMiddleware.verifyToken, (req, res, next) => {
 	expense.getAll(req.tokenData.userId)
 		.then(result => {
 			res.status(200).send({
-				expenses: result.rows
+				expenses: result.rows,
+				fields: result.fields.map(field => field.name)
 			});
 		})
 		.catch(err => next(err));
