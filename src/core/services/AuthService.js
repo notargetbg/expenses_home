@@ -1,21 +1,6 @@
 import * as jwt from 'jsonwebtoken';
+import { handleResponse } from '../helpers';
 import API from '../client';
-
-function handleResponse(response) {
-
-	if(!response.ok) {
-		return response.json().then(err => {
-			const errorData = {
-				status: response.status,
-				statusText: response.statusText,
-				...err
-			};
-
-			throw errorData;
-		});
-	}
-	return response.json();
-}
 
 export default class AuthService {
 	static login(email, password) {

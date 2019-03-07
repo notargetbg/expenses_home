@@ -1,13 +1,14 @@
 import API from '../../core/client';
+import { handleResponse } from '../../core/helpers';
 import * as actionTypes from './actionTypes';
 
-function handleError(dispatch) {
+function handleError(dispatch, dataType) {
 	return err => {
 		/* eslint-disable no-console */
 		console.log('Error:', err);
 
 		dispatch({
-			type: 'USER_ERROR',
+			type: `${dataType}_SHOW_ERROR`,
 			payload: err
 		});
 	};
@@ -22,7 +23,7 @@ function makeGetUserDataType(dataType) {
 
 
 			return API.getUserData(dataType.toLowerCase())
-				.then(res => res.json())
+				.then(handleResponse)
 				.then(res => {
 					dispatch({
 						type: actionTypes[`GET_${dataType}_SUCCESS`],
@@ -42,7 +43,7 @@ function makeUpdateUserDataType(dataType) {
 			});
 
 			return API.updateDataType(params, dataType.toLowerCase())
-				.then(res => res.json())
+				.then(handleResponse)
 				.then(res => {
 					dispatch({
 						type: actionTypes[`${dataType}_UPDATE_SUCCESS`],
@@ -62,7 +63,7 @@ function makeCreateUserDataType(dataType) {
 			});
 
 			return API.createDataType(params, dataType.toLowerCase())
-				.then(res => res.json())
+				.then(handleResponse)
 				.then(res => {
 					dispatch({
 						type: actionTypes[`${dataType}_CREATE_SUCCESS`],
@@ -82,7 +83,7 @@ function makeDeleteUserDataType(dataType) {
 			});
 
 			return API.deleteDataType(id, dataType.toLowerCase())
-				.then(res => res.json())
+				.then(handleResponse)
 				.then(res => {
 					dispatch({
 						type: actionTypes[`${dataType}_DELETE_SUCCESS`],

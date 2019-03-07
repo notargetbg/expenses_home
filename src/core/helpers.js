@@ -44,3 +44,19 @@ export function sortByKey(key, collection, isOrderAscending) {
 		return 0;
 	});
 }
+
+export function handleResponse(response) {
+
+	if(!response.ok) {
+		return response.json().then(err => {
+			const errorData = {
+				status: response.status,
+				statusText: response.statusText,
+				...err
+			};
+
+			throw errorData;
+		});
+	}
+	return response.json();
+}

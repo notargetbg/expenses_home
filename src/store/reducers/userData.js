@@ -2,6 +2,7 @@ import { GET_DATA_PENDING } from '../actions/actionTypes';
 
 const DEFAULT_STATE = {
 	isLoading: false,
+	error: null,
 	items: []
 };
 
@@ -49,6 +50,20 @@ export default function createUserDataReducer(dataType = '') {
 				items: state.items.filter(item => {
 					return item.id !== action.payload.result.id;
 				})
+			};
+		}
+
+		if (action.type === `${dataType}_SHOW_ERROR`) {
+			return {
+				...state,
+				error: action.payload
+			};
+		}
+
+		if (action.type === `${dataType}_DISMISS_ERROR`) {
+			return {
+				...state,
+				error: null
 			};
 		}
 

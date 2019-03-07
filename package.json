@@ -5,8 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "webpack",
-        "start": "webpack-dev-server",
-        "server": "nodemon server/server"
+        "start": "nodemon server/server | webpack-dev-server"
     },
     "author": "",
     "license": "ISC",
@@ -37,6 +36,7 @@
         "i": "^0.3.6",
         "jsonwebtoken": "^8.4.0",
         "lodash": "^4.17.11",
+        "moment": "^2.24.0",
         "node-sass": "^4.9.3",
         "npm": "^6.8.0",
         "pg": "^7.8.0",

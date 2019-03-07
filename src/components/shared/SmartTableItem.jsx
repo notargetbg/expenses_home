@@ -18,19 +18,31 @@ export default class SmartTableItem extends React.Component {
 	}
 
 	render() {
-		const { itemKey, itemValue, isEditing, handleChange } = this.props;
+		const { itemKey, itemValue, isEditing, handleChange, relationalData } = this.props;
 
 		return (
 			<td>
-				{isEditing && itemKey !== 'id' &&
+				{isEditing && itemKey !== 'id' && (!relationalData || relationalData.type !== itemKey) &&
 					<Input placeholder={itemKey}
 						onClick={this.handleClick}
 						onChange={handleChange(itemKey)}
 						value={itemValue || ''}
 					/>
 				}
+				{isEditing && itemKey !== 'id' && (relationalData && relationalData.type === itemKey) &&
+					<Input placeholder={itemKey}
+						type='select'
+						onClick={this.handleClick}
+						onChange={handleChange(itemKey)}
+						value={itemValue || ''}
+					>
+						{relationalData.items.map(item =>
+							<option key={item.id} value={item.id}>{item.name}</option>
+						)}
+					</Input>
+				}
 				{!isEditing &&
-					<span>
+					<span className='field-value'>
 						{this.getRelationalValue()}
 					</span>
 				}

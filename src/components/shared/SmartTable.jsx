@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Input } from 'reactstrap';
+import { Table, Button, Input, Alert } from 'reactstrap';
 import SmartTableRow from './SmartTableRow';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
@@ -9,10 +9,20 @@ export default class SmartTable extends React.Component {
 	state = {
 		addNewItemFields: {},
 		sortKey: 'id',
-		isOrderAscending: true
+		isOrderAscending: true,
+		hasError: false
 	};
 
+	componentDidUpdate() {
+		// if(hasError: false)
+	}
+
+	onErrorDismiss = () => {
+		this.setState({hasError: false});
+	}
+
 	handleFieldUpdate = (field) => (e) => {
+		console.log('field update:', field, e.target.value);
 		this.setState({
 			addNewItemFields: {
 				...this.state.addNewItemFields,
@@ -41,7 +51,7 @@ export default class SmartTable extends React.Component {
 			.filter(key => key !== 'userID') || [];
 
 		const items = data.items.map(row =>
-			Object.keys(row)
+			row && Object.keys(row)
 				.filter(key => key !== 'userID')
 				.reduce((acc, key) => {
 					if (key === 'date') {
@@ -91,6 +101,9 @@ export default class SmartTable extends React.Component {
 
 					</tbody>
 				</Table>
+				<Alert color='info' isOpen={this.state.hasError} toggle={this.onErrorDismiss}>
+					I am an alert and I can be dismissed!
+				</Alert>
 				<Button className='m-auto d-block' onClick={this.addNew}>
 					Add new
 				</Button>
