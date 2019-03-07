@@ -69,10 +69,12 @@ export default class SmartTable extends React.Component {
 					</thead>
 					<tbody>
 						{sortByKey(this.state.sortKey, items, isOrderAscending).map(item => (
-							<SmartTableRow handleUpdateRow={this.props.handleUpdate}
+							<SmartTableRow
+								handleUpdateRow={this.props.handleUpdate}
 								handleDeleteRow={this.props.handleDelete}
 								item={item}
 								key={item['id']}
+								relationalData={this.props.relationalData}
 							/>
 						))}
 

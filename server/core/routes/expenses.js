@@ -20,7 +20,7 @@ router.get('/', authMiddleware.verifyToken, (req, res, next) => {
 
 router.post('/', authMiddleware.verifyToken,
 	(req, res, next) => {
-		if (!req.body.name || !req.body.amount || !req.body.date) {
+		if (!req.body.name || !req.body.amount || !req.body.date || !req.body.categoryID) {
 			return res.status(400).send({ 'message': 'Input data missing.' });
 		}
 
@@ -28,14 +28,17 @@ router.post('/', authMiddleware.verifyToken,
 
 		expense.create(
 			req.tokenData.userId,
-			req.body.categoryId,
+			req.body.categoryID,
 			req.body.name,
 			req.body.amount,
 			req.body.description,
 			req.body.date
 		)
 			.then(result => {
-				res.status(200).send({ 'message': 'OK.' });
+				res.status(200).send({
+					'message': 'OK.',
+					'result': result.rows[0]
+				});
 			})
 			.catch(err => {
 				next(err);
@@ -48,7 +51,7 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 	}
 
 	expense.update(
-		req.body.categoryId,
+		req.body.categoryID,
 		req.body.name,
 		req.body.amount,
 		req.body.description,
@@ -59,7 +62,10 @@ router.put('/:id', authMiddleware.verifyToken, (req, res, next) => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is updated.' });
 			} else {
-				res.status(200).send({ 'message': 'OK.' });
+				res.status(200).send({
+					'message': 'OK.',
+					'result': result.rows[0]
+				});
 			}
 		})
 		.catch(err => {
@@ -76,7 +82,10 @@ router.delete('/:id', authMiddleware.verifyToken, (req, res ,next) => {
 			if(result.rowCount === 0) {
 				res.status(400).send({ 'message': 'Nothing is deleted.' });
 			} else {
-				res.status(200).send({ 'message': 'OK.' });
+				res.status(200).send({
+					'message': 'OK.',
+					'result': result.rows[0]
+				});
 			}
 		})
 		.catch(err => {

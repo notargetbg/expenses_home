@@ -48,6 +48,7 @@ export default class SmartTableRow extends React.Component {
 						isEditing={isEditing}
 						itemValue={fields[key]}
 						itemKey={key}
+						relationalData={this.props.relationalData}
 					/>
 				))}
 

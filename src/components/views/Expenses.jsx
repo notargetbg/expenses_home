@@ -1,23 +1,38 @@
 import React from 'react';
 import { Container, Jumbotron } from 'reactstrap';
+import * as actions from '../../store/actions/userData';
 import { connect } from 'react-redux';
 import SmartTable from '../shared/SmartTable';
 
 class Expenses extends React.Component {
-	state = {
-
+	updateExpenses = (...fields) => {
+		this.props.dispatch(actions.updateExpenses(...fields));
 	}
 
-	componentDidMount() {
+	createExpenses = (...fields) => {
+		this.props.dispatch(actions.createExpenses(...fields));
+	}
 
+	deleteExpenses = (id) => {
+		this.props.dispatch(actions.deleteExpenses(id));
 	}
 
 	render() {
-		const { expenses } = this.props;
+		const { expenses, categories } = this.props;
 
 		if (!expenses) {
 			return null;
 		}
+
+		const relationalData = {
+			type: 'categoryID',
+			items: categories.items.map(item => {
+				return {
+					id: item.id,
+					name: item.name
+				};
+			})
+		};
 
 		return (
 			<Container>
@@ -30,7 +45,13 @@ class Expenses extends React.Component {
 					</h4>
 				</Jumbotron>
 
-				<SmartTable data={this.props.expenses} />
+				<SmartTable
+					data={this.props.expenses}
+					relationalData={relationalData}
+					handleUpdate={this.updateExpenses}
+					handleCreate={this.createExpenses}
+					handleDelete={this.deleteExpenses}
+				/>
 			</Container>
 		);
 	}
@@ -38,7 +59,8 @@ class Expenses extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		expenses: state.expenses
+		expenses: state.expenses,
+		categories: state.categories
 	};
 }
 

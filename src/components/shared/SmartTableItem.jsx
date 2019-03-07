@@ -6,6 +6,17 @@ export default class SmartTableItem extends React.Component {
 		e.stopPropagation();
 	}
 
+	getRelationalValue = () => {
+		const { itemKey, itemValue, relationalData } = this.props;
+
+		if (!relationalData || relationalData.type !== itemKey) {
+			return itemValue;
+		}
+
+		const relationalItem = relationalData.items.find(item => item.id === itemValue);
+		return relationalItem ? relationalItem.name : itemValue;
+	}
+
 	render() {
 		const { itemKey, itemValue, isEditing, handleChange } = this.props;
 
@@ -20,7 +31,7 @@ export default class SmartTableItem extends React.Component {
 				}
 				{!isEditing &&
 					<span>
-						{itemValue}
+						{this.getRelationalValue()}
 					</span>
 				}
 			</td>

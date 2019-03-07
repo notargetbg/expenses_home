@@ -103,3 +103,8 @@ export const getIncome = makeGetUserDataType('INCOME');
 export const updateIncome = makeUpdateUserDataType('INCOME');
 export const createIncome = makeCreateUserDataType('INCOME');
 export const deleteIncome = makeDeleteUserDataType('INCOME');
+
+export const getExpenses = makeGetUserDataType('EXPENSES');
+export const updateExpenses = makeUpdateUserDataType('EXPENSES');
+export const createExpenses = makeCreateUserDataType('EXPENSES');
+export const deleteExpenses = makeDeleteUserDataType('EXPENSES');

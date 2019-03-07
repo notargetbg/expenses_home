@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../authMiddleware');
-const db = require('../../db');
 const income = require('../../core/models/income.js');
 
 router.get('/', authMiddleware.verifyToken, (req, res, next) => {
