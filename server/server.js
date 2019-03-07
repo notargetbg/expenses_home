@@ -5,6 +5,7 @@ const userRouter = require('./core/routes/user.js');
 const expensesRouter = require('./core/routes/expenses.js');
 const categoriesRouter = require('./core/routes/categories.js');
 const incomeRouter = require('./core/routes/income.js');
+const moment = require('moment');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,6 +29,13 @@ app.use(function (req, res, next) {
 	res.setHeader('Access-Control-Allow-Credentials', 'true');
 	res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin, Content-Type, Accept, Authorization');
 	// Pass to next layer of middleware
+	next();
+});
+
+app.use(function (req, res, next) {
+	if (req.body.date) {
+		req.body.date = moment.utc(req.body.date);
+	}
 	next();
 });
 
