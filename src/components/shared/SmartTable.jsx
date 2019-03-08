@@ -21,7 +21,6 @@ export default class SmartTable extends React.Component {
 	}
 
 	handleFieldUpdate = (field) => (e) => {
-		console.log('field update:', field, e.target.value);
 		this.setState({
 			addNewItemFields: {
 				...this.state.addNewItemFields,
@@ -90,7 +89,7 @@ export default class SmartTable extends React.Component {
 						<tr>
 							{filteredFields.map(field => (
 								<td key={field}>
-									{field !== 'id' && (relationalData && relationalData.type !== field) &&
+									{field !== 'id' && (!relationalData || relationalData.type !== field) &&
 										<Input value={this.state.addNewItemFields[field] || ''} onChange={this.handleFieldUpdate(field)}/>
 									}
 
