@@ -17,6 +17,10 @@ class Income extends React.Component {
 		this.props.dispatch(actions.deleteIncome(id));
 	}
 
+	dismissError = () => {
+		this.props.dispatch(actions.dismissErrorIncome());
+	}
+
 	render() {
 		const { income } = this.props;
 
@@ -35,6 +39,7 @@ class Income extends React.Component {
 					handleUpdate={this.updateIncome}
 					handleCreate={this.createIncome}
 					handleDelete={this.deleteIncome}
+					handleErrorDismiss={this.dismissError}
 					data={this.props.income}
 				/>
 			</Container>

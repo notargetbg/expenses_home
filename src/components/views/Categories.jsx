@@ -17,6 +17,10 @@ class Categories extends React.Component {
 		this.props.dispatch(actions.deleteCategory(id));
 	}
 
+	dismissError = () => {
+		this.props.dispatch(actions.dismissErrorCategory());
+	}
+
 	render() {
 		const { categories } = this.props;
 
@@ -40,6 +44,7 @@ class Categories extends React.Component {
 					handleUpdate={this.updateCategory}
 					handleCreate={this.createCategory}
 					handleDelete={this.deleteCategory}
+					handleErrorDismiss={this.dismissError}
 					data={categories}
 				/>
 			</Container>

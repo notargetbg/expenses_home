@@ -43,7 +43,7 @@ export default class SmartTable extends React.Component {
 	}
 
 	render() {
-		const { data } = this.props;
+		const { data, relationalData } = this.props;
 		const { isOrderAscending } = this.state;
 
 		const filteredFields = data.fields && data.fields
@@ -83,15 +83,29 @@ export default class SmartTable extends React.Component {
 								handleDeleteRow={this.props.handleDelete}
 								item={item}
 								key={item['id']}
-								relationalData={this.props.relationalData}
+								relationalData={relationalData}
 							/>
 						))}
 
 						<tr>
 							{filteredFields.map(field => (
 								<td key={field}>
-									{field !== 'id' &&
+									{field !== 'id' && (relationalData && relationalData.type !== field) &&
 										<Input value={this.state.addNewItemFields[field] || ''} onChange={this.handleFieldUpdate(field)}/>
+									}
+
+									{field !== 'id' && (relationalData && relationalData.type === field) &&
+										<Input placeholder={field}
+											type='select'
+											onClick={this.handleClick}
+											onChange={this.handleFieldUpdate(field)}
+											value={this.state.addNewItemFields[field]}
+										>
+											<option>Pick one</option>
+											{relationalData.items.map(item =>
+												<option key={item.id} value={item.id}>{item.name}</option>
+											)}
+										</Input>
 									}
 								</td>
 							))}
