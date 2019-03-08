@@ -14,6 +14,14 @@ function handleError(dispatch, dataType) {
 	};
 }
 
+function makeDissmissErrorDataType(dataType) {
+	return () => dispatch => {
+		dispatch({
+			type: actionTypes[`${dataType}_DISMISS_ERROR`]
+		});
+	};
+}
+
 function makeGetUserDataType(dataType) {
 	return () => {
 		return dispatch => {
@@ -30,7 +38,7 @@ function makeGetUserDataType(dataType) {
 						payload: res
 					});
 				})
-				.catch(handleError(dispatch));
+				.catch(handleError(dispatch, dataType));
 		};
 	};
 }
@@ -50,7 +58,7 @@ function makeUpdateUserDataType(dataType) {
 						payload: res.result
 					});
 				})
-				.catch(handleError(dispatch));
+				.catch(handleError(dispatch, dataType));
 		};
 	};
 }
@@ -70,7 +78,7 @@ function makeCreateUserDataType(dataType) {
 						payload: res
 					});
 				})
-				.catch(handleError(dispatch));
+				.catch(handleError(dispatch, dataType));
 		};
 	};
 }
@@ -90,7 +98,7 @@ function makeDeleteUserDataType(dataType) {
 						payload: res
 					});
 				})
-				.catch(handleError(dispatch));
+				.catch(handleError(dispatch, dataType));
 		};
 	};
 }
@@ -99,13 +107,16 @@ export const getCategories = makeGetUserDataType('CATEGORIES');
 export const updateCategory = makeUpdateUserDataType('CATEGORIES');
 export const createCategory = makeCreateUserDataType('CATEGORIES');
 export const deleteCategory = makeDeleteUserDataType('CATEGORIES');
+export const dismissErrorCategory = makeDissmissErrorDataType('CATEGORIES');
 
 export const getIncome = makeGetUserDataType('INCOME');
 export const updateIncome = makeUpdateUserDataType('INCOME');
 export const createIncome = makeCreateUserDataType('INCOME');
 export const deleteIncome = makeDeleteUserDataType('INCOME');
+export const dismissErrorIncome = makeDissmissErrorDataType('INCOME');
 
 export const getExpenses = makeGetUserDataType('EXPENSES');
 export const updateExpenses = makeUpdateUserDataType('EXPENSES');
 export const createExpenses = makeCreateUserDataType('EXPENSES');
 export const deleteExpenses = makeDeleteUserDataType('EXPENSES');
+export const dismissErrorExpenses = makeDissmissErrorDataType('EXPENSES');

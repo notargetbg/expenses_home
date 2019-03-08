@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function immutableMove(arr, from, to) {
 	return arr.reduce((acc, current, idx, self) => {
 		if (from === to) {
@@ -19,10 +21,8 @@ export function immutableMove(arr, from, to) {
 	}, []);
 }
 
-export function formatDate(timestamp) {
-	if(new Date(timestamp)) {
-		return new Date(timestamp).toISOString().split('T')[0];
-	}
+export function formatDate(utcTimestamp) {
+	return moment(utcTimestamp).format('YYYY-MM-DD');
 }
 
 export function sortByKey(key, collection, isOrderAscending) {

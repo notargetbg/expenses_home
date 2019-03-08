@@ -9,8 +9,7 @@ export default class SmartTable extends React.Component {
 	state = {
 		addNewItemFields: {},
 		sortKey: 'id',
-		isOrderAscending: true,
-		hasError: false
+		isOrderAscending: true
 	};
 
 	componentDidUpdate() {
@@ -18,7 +17,7 @@ export default class SmartTable extends React.Component {
 	}
 
 	onErrorDismiss = () => {
-		this.setState({hasError: false});
+		this.props.handleErrorDismiss();
 	}
 
 	handleFieldUpdate = (field) => (e) => {
@@ -101,8 +100,8 @@ export default class SmartTable extends React.Component {
 
 					</tbody>
 				</Table>
-				<Alert color='info' isOpen={this.state.hasError} toggle={this.onErrorDismiss}>
-					I am an alert and I can be dismissed!
+				<Alert color='danger' isOpen={data.error} toggle={this.onErrorDismiss}>
+					{data.error && data.error.message}
 				</Alert>
 				<Button className='m-auto d-block' onClick={this.addNew}>
 					Add new

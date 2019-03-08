@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
 
 app.use(function (req, res, next) {
 	if (req.body.date) {
-		req.body.date = moment.utc(req.body.date);
+		req.body.date = moment(req.body.date).format();
 	}
 	next();
 });

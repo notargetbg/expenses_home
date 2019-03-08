@@ -17,6 +17,10 @@ class Expenses extends React.Component {
 		this.props.dispatch(actions.deleteExpenses(id));
 	}
 
+	dismissError = () => {
+		this.props.dispatch(actions.dismissErrorExpenses());
+	}
+
 	render() {
 		const { expenses, categories } = this.props;
 
@@ -51,6 +55,7 @@ class Expenses extends React.Component {
 					handleUpdate={this.updateExpenses}
 					handleCreate={this.createExpenses}
 					handleDelete={this.deleteExpenses}
+					handleErrorDismiss={this.dismissError}
 				/>
 			</Container>
 		);
