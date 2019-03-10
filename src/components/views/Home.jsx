@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
+import { budgetSelector } from '../../store/selectors/budgetSelector';
 import LoginForm from '../common/LoginForm';
 import defaultImage from '../../assets/images/user-default.png';
 
@@ -36,6 +37,8 @@ class Home extends React.Component {
 	render() {
 		const { isUserLoggedIn, loginPending, error, email } = this.props.user;
 
+		console.log(this.props.budget)
+
 		return (
 			<Container className='home-container h-100'>
 				{isUserLoggedIn &&
@@ -44,6 +47,11 @@ class Home extends React.Component {
 							<img src={defaultImage} className='user-image-big' />
 							<p className='lead'>Hey there, <strong>{this.formatAsDisplayName(email)}</strong>!</p>
 							<hr className='' />
+							<div>
+								<p>Income: {this.props.budget && this.props.budget.income}</p>
+								<p>Expenses: {this.props.budget && this.props.budget.expenses}</p>
+								<p><strong>Funds remaining: {this.props.budget && this.props.budget.total}</strong></p>
+							</div>
 						</CardBody>
 					</Card>
 				}
@@ -66,8 +74,9 @@ class Home extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		user: state.user
+		user: state.user,
+		budget: budgetSelector(state)
 	};
-};
+}
 
 export default connect(mapStateToProps)(Home);
