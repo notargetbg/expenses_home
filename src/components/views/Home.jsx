@@ -37,8 +37,6 @@ class Home extends React.Component {
 	render() {
 		const { isUserLoggedIn, loginPending, error, email } = this.props.user;
 
-		console.log(this.props.budget)
-
 		return (
 			<Container className='home-container h-100'>
 				{isUserLoggedIn &&
