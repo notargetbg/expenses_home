@@ -23,7 +23,7 @@ class Home extends React.Component {
 	}
 
 	handleLogin = (name, password) => {
-		this.props.dispatch(actions.userLogin(name, password));
+		this.props.userLogin(name, password).then(res => console.log(res));
 	}
 
 	formatAsDisplayName = (email) => {
@@ -77,4 +77,6 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, {
+	userLogin: actions.userLogin
+})(Home);

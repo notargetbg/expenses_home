@@ -11,6 +11,8 @@ function handleError(dispatch, errorType) {
 			type: actionTypes.USER_ERROR,
 			payload: err
 		});
+
+		return err;
 	};
 }
 
@@ -22,12 +24,12 @@ export const clearError = () => {
 };
 
 export const userLogin = (email, password) => {
-	return dispatch => {
+	return async dispatch => {
 		dispatch({
 			type: actionTypes.USER_LOGIN_PENDING
 		});
 
-		return AuthService.login(email, password)
+		return await AuthService.login(email, password)
 			.then(res => {
 				AuthService.saveToken(res.token);
 
@@ -39,6 +41,8 @@ export const userLogin = (email, password) => {
 					dispatch((getUserData()));
 					dispatch((getUserDetails()));
 				}
+
+				return res;
 			})
 			.catch(handleError(dispatch));
 	};

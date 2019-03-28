@@ -2,12 +2,13 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+require("babel-polyfill");
 const port = process.env.PORT || 3000;
 
 module.exports = {
 	mode: 'development',
 	entry: {
-		app: './src/index.js'
+		app:  ["babel-polyfill", "./src/index.js"]
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
